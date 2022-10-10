@@ -10,16 +10,20 @@ public class StrongholdMap {
     // TODO: Ask TA for help: can I use this to declare 2-D array
     private Stronghold[][] map;
     private ArrayList<Player> players;
-    private ArrayList<Integer> scores;
 
+    // EFFECTS: construct a map with no stronghold, player and with the fixed WIDTH and HEIGHT
     public StrongholdMap() {
         // stub
     }
 
-    private void addPlayers() {
+    // MODIFIES: this
+    // EFFECTS: add a player to player list
+    private void addPlayer(Player p) {
         // stub
     }
 
+    // MODIFIES: this
+    // EFFECTS: calculate the current scores for all players
     private void calScores() {
         // stub
     }
