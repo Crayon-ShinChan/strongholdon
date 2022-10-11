@@ -6,8 +6,8 @@ public class Stronghold {
     private int posX;
     private int posY;
 
-    // REQUIRES: poxX >= StrongholdMap.WIDTH AND posX < StrongholdMap.HEIGHT
-    //           AND poxY >= StrongholdMap.WIDTH AND posY < StrongholdMap.HEIGHT
+    // REQUIRES: poxX >= 0 AND posX < StrongholdMap.WIDTH
+    //           AND poxY >= 0 AND posY < StrongholdMap.HEIGHT
     // EFFECTS: set a player as the owner of a stronghold in the position (posX, posY)
     public Stronghold(Player owner, int posX, int posY) {
         // stub

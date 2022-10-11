@@ -5,7 +5,7 @@ import java.util.ArrayList;
 // Represents a player in the game
 public class Player {
     // TODO: Ask TA for help: playerId will not change for the player, should I use final here?
-    private int playerId;
+    private final int playerId;
     private int posX;
     private int posY;
     private int score;
@@ -17,10 +17,11 @@ public class Player {
     // EFFECTS: playerId is set to a positive integer not assigned to any other players
     //          posX and posY is set within the map
     public Player(int playerId, int posX, int posY) {
+        this.playerId = playerId;
         //stub
     }
 
-    // TODO: change the direction inputs for multiple players play simultaneously
+    // TODO: change the direction inputs for multiple players playing simultaneously
     // REQUIRES: direction is one of ["w", "a", "s", "d"]
     // MODIFIES: this
     // EFFECTS: move the player to another stronghold with speed of 1
@@ -28,7 +29,8 @@ public class Player {
     //          if there is another players in the destination or the destination is out of the map
     //            - return false
     //          otherwise, return true
-    private void move(String direction) {
+    private boolean move(String direction) {
+        return false;
         //stub
     }
 
