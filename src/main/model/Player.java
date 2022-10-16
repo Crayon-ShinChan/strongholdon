@@ -9,13 +9,15 @@ public class Player {
     private int posX;
     private int posY;
     private int score;
-    private ArrayList<Stronghold> newStronghold;
+    // private ArrayList<Stronghold> newStronghold;
     // private String color;
 
-    // REQUIRES: playerId > 0 AND posX >= 0 AND posX < StrongholdMap.WIDTH
-    //           AND posY >= 0 AND posY < StrongholdMap.HEIGHT
-    // EFFECTS: playerId is set to a positive integer not assigned to any other players
+    // TODO: add the new fields to EFFECTS if you add the fields later
+    // REQUIRES: playerId > 0 AND posX >= 0 AND posX < StrongholdMap.width
+    //           AND posY >= 0 AND posY < StrongholdMap.height
+    // EFFECTS: playerId is set to a positive integer
     //          posX and posY is set within the map
+    //          score is set to be 0
     public Player(int playerId, int posX, int posY) {
         this.playerId = playerId;
         //stub
@@ -26,6 +28,7 @@ public class Player {
     // MODIFIES: this
     // EFFECTS: move the player to another stronghold with speed of 1
     //          the player can occupy the destination if he successfully gets to the destination
+    //          the player can occupy the strongholds in circles he made after moving
     //          if there is another players in the destination or the destination is out of the map
     //            - return false
     //          otherwise, return true
