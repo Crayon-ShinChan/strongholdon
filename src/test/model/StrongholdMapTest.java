@@ -144,7 +144,6 @@ class StrongholdMapTest {
         strongholdMap.addPlayer();
         assertEquals(1, strongholdMap.getPlayers().size());
         // TODO: change it to test player directly, also change test stronghold
-
         combineTestPlayerWithNullPosition(strongholdMap.getPlayers().get(0), 1, strongholdMap);
     }
 

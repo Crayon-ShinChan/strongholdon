@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 // Represent the game map containing data of strongholds
@@ -162,7 +161,6 @@ public class StrongholdMap {
     // EFFECTS: shuffle positions for players
     private void shufflePositionList(int[][] positionList) {
         Random rand = new Random();
-
         for (int i = 0; i < positionList.length; i++) {
             int randomIndexToSwap = rand.nextInt(positionList.length);
             int[] temp = positionList[randomIndexToSwap];
@@ -194,4 +192,6 @@ public class StrongholdMap {
             };
         }
     }
+
+    // TODO: delete players, only available before any Match, add fields to indicate match start
 }

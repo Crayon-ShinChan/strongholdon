@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 // Represents a player in the game
 public class Player {
@@ -43,6 +42,7 @@ public class Player {
             return false;
         }
         occupyStrongholds();
+        strongholdMap.calScores();
         return true;
     }
 

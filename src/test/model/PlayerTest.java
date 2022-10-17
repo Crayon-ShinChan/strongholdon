@@ -55,6 +55,7 @@ public class PlayerTest {
         assertEquals(SMALL_WIDTH - 1, playerList.get(2).getPosY());
     }
 
+    // TODO: ask if we should test calScore, which is tested in StrongholdMap test class
     @Test
     public void testMoveOneTime() {
         Player player = strongholdMap1.getPlayers().get(0);
@@ -62,6 +63,7 @@ public class PlayerTest {
         assertEquals(2, player.getPosX());
         assertEquals(3, player.getPosY());
         combineTestStronghold(strongholdMap1.getStrongholds()[2][3], 1, 2, 3);
+        assertEquals(2, player.getScore());
     }
 
     @Test
