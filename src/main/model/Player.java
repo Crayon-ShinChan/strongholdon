@@ -111,7 +111,6 @@ public class Player {
     private boolean movePlayer(String direction) {
         int newPosX = posX;
         int newPosY = posY;
-        // TODO: try switch here
         if (direction.equals("w")) {
             newPosX--;
         } else if (direction.equals("s")) {
@@ -121,13 +120,11 @@ public class Player {
         } else {
             newPosY++;
         }
-
         if (checkMovementValidity(newPosX, newPosY)) {
             posX = newPosX;
             posY = newPosY;
             return true;
         }
-
         return false;
     }
 
@@ -141,10 +138,10 @@ public class Player {
             }
         }
         if (newPosX < 0 || newPosX >= strongholdMap.height || newPosY < 0 || newPosY >= strongholdMap.width) {
-            posX = newPosX;
-            posY = newPosY;
             return false;
         }
+        posX = newPosX;
+        posY = newPosY;
         return true;
     }
 

@@ -29,12 +29,13 @@ public class PlayerTest {
         // create a small map for testing
         strongholdMap1 = new StrongholdMap(SMALL_HEIGHT, SMALL_WIDTH);
         strongholdMap2 = new StrongholdMap(SMALL_HEIGHT, SMALL_WIDTH);
+        playerList = new ArrayList<>();
         playerList.add(new Player(1, 3, 3, null));
         playerList.add(new Player(2, 0, 0, null));
         playerList.add(new Player(3, SMALL_HEIGHT - 1, SMALL_WIDTH - 1, null));
         // TODO: ask: p4 is just for the test of move when player want to move to another player,
         // TODO: should p4 be tested in constructor?
-        playerList.add(new Player(4, 1, 0, null));
+        playerList.add(new Player(4, 0, 1, null));
         playerList.add(new Player(1, 3, 3, null));
         constructMap1();
         constructMap2();
@@ -145,7 +146,7 @@ public class PlayerTest {
     @Test
     public void testMoveOutOfMap() {
         Player player = strongholdMap2.getPlayers().get(1);
-        assertTrue(player.move("w"));
+        assertFalse(player.move("w"));
         // TODO: ask: should test position again in this test? other tests have tested this
         assertEquals(0, player.getPosX());
         assertEquals(0, player.getPosY());
@@ -154,7 +155,7 @@ public class PlayerTest {
     @Test
     public void testMoveToAnotherPlayer() {
         Player player = strongholdMap2.getPlayers().get(3);
-        assertTrue(player.move("a"));
+        assertFalse(player.move("a"));
         // TODO: ask: should test position again in this test? other tests have tested this
         assertEquals(0, player.getPosX());
         assertEquals(1, player.getPosY());
