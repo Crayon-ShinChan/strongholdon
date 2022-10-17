@@ -4,29 +4,32 @@ import java.util.ArrayList;
 
 // Represent the game map containing data of strongholds
 public class StrongholdMap {
-    public static final int DEFAULT_WIDTH = 16;
-    public static final int DEFAULT_HEIGHT = 16;
+    public static final int DEFAULT_HEIGHT = 20; // should be larger than 4
+    public static final int DEFAULT_WIDTH = 20; // should be larger than 4
+    public static final int MAX_PLAYER_NUM = 4;
+    public static final int MIN_PLAYER_NUM = 2;
     // TODO: Ask TA for help: final without static should be fields or constant like WIDTH, should they be public?
-    public final int width;
     public final int height;
+    public final int width;
     private Stronghold[][] strongholds;
     private ArrayList<Player> players;
 
-    // EFFECTS: construct a map with no stronghold, player and with the fixed WIDTH and HEIGHT
+    // EFFECTS: construct a map with no stronghold, player and with the fixed default width and height
     public StrongholdMap() {
-        this.width = DEFAULT_WIDTH;
         this.height = DEFAULT_HEIGHT;
-        this.strongholds = new Stronghold[this.width][this.height];
+        this.width = DEFAULT_WIDTH;
+        this.strongholds = new Stronghold[this.height][this.width];
         // stub
     }
 
     // TODO: ask if there is also a constructor with width and map parameters, how does the computer distinguish them
-    // EFFECTS: construct a map with no
-    public StrongholdMap(int width, int height) {
-        this.width = width;
+    // REQUIRES: width >= 4 AND height >= 4;
+    // EFFECTS: construct a map with no stronghold, player and with the fixed width and height
+    public StrongholdMap(int height, int width) {
         this.height = height;
+        this.width = width;
         // TODO: ask if there is any way to eliminate the duplicated rows in different constructors
-        this.strongholds = new Stronghold[this.width][this.height];
+        this.strongholds = new Stronghold[this.height][this.width];
         // stub
     }
 
@@ -35,15 +38,17 @@ public class StrongholdMap {
     // MODIFIES: this
     // EFFECTS: assign initial positions and initial strongholds for players
     //          if the initial positions already have strongholds, change the owner
+    //          all players have different initial positions
     public void startMatch() {
         // stub
     }
 
     // TODO: ask: this func is mainly for test, should I use a func with different name? or just startMatch?
-    // REQUIRES: players.size() >= 2 AND players.size() <= 4
+    // REQUIRES: players.size() >= MIN_PLAYER_NUM AND players.size() <= MAX_PLAYER_NUM
     //           AND players.get(i).getPosX() != null AND players.get(i).getPosY() != null
+    //           AND all players have different initial positions and playerId
     // MODIFIES: this
-    // EFFECTS: assign initial positions and initial strongholds for players
+    // EFFECTS: assign initial strongholds for players
     //          if the initial positions already have strongholds, change the owner
     public void startMatchWithPlayerPosition() {
         // stub
@@ -58,7 +63,7 @@ public class StrongholdMap {
     // TODO: ask this is for test, is there any better way?
     // REQUIRES: p
     // MODIFIES: this
-    // EFFECTS: add a player to player list
+    // EFFECTS: add a player to player list without position values
     public void addPlayerWithData(Player p) {
         // stub
     }
@@ -75,6 +80,12 @@ public class StrongholdMap {
         // stub
     }
 
+    // TODO: ask if print function should be moved to ui package?
+//    // EFFECTS: print strongholds using player id
+//    public void printStrongholds() {
+//        // stub
+//    }
+
     // TODO: ask should I make it private?
     // EFFECTS: return list of players in the map
     public ArrayList<Player> getPlayers() {
@@ -86,8 +97,5 @@ public class StrongholdMap {
         return strongholds;
     }
 
-    // EFFECTS: print strongholds using player id
-    public void printStrongholds() {
-        // stub
-    }
+    // TODO: ask should we test helper functions?
 }

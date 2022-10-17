@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class Player {
     // TODO: Ask TA for help: playerId will not change for the player, should I use final here?
     private final int playerId;
-    private int posX;
-    private int posY;
+    private Integer posX; // Integer can be null
+    private Integer posY;
     private int score;
     // private ArrayList<Stronghold> newStronghold;
     // private String color;
@@ -38,19 +38,34 @@ public class Player {
         //stub
     }
 
+    // EFFECTS: set score of the player
     public void setScore(int score) {
         this.score = score;
     }
 
+    // EFFECTS: get playerId
     public int getPlayerId() {
         return playerId;
     }
 
+    // TODO: ask here posX is Integer not int, it pass with reference, right?
+    //  which means if other class call this method, they can get the reference and change posX
+    //  if I do not want other class to change the posX, but test class still has to call the func, how to design?
+    //  can we simple change the return type as int rather than integer?
+    //  if now posX is a customized class written by me, how to design to avoid other class to change it but
+    //  the test class still can get its value?
+    // EFFECTS: get posX
     public int getPosX() {
         return posX;
     }
 
+    // EFFECTS: get posY
     public int getPosY() {
         return posY;
+    }
+
+    // EFFECTS: get score
+    public int getScore() {
+        return score;
     }
 }
