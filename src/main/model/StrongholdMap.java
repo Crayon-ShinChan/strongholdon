@@ -118,7 +118,6 @@ public class StrongholdMap {
     // EFFECTS: calculate the current scores for the current player who moved just now
     public void calScores() {
         int[] newScores = new int[players.size()];
-//        Arrays.fill(newScores, 0);
         for (int i = 0; i < strongholds.length; i++) {
             for (int j = 0; j < strongholds[0].length; j++) {
                 if (strongholds[i][j] == null) {
