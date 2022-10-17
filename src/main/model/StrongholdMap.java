@@ -21,6 +21,7 @@ public class StrongholdMap {
         this.height = DEFAULT_HEIGHT;
         this.width = DEFAULT_WIDTH;
         this.strongholds = new Stronghold[this.height][this.width];
+        // TODO: Why Warning:(24, 38) Explicit type argument Player can be replaced with <>?
         this.players = new ArrayList<Player>();
     }
 
@@ -53,6 +54,8 @@ public class StrongholdMap {
             } else {
                 strongholds[posX][posY].setOwner(players.get(i));
             }
+            players.get(i).setPosX(posX);
+            players.get(i).setPosY(posY);
         }
         calScores();
     }
@@ -118,6 +121,9 @@ public class StrongholdMap {
         Arrays.fill(newScores, 0);
         for (int i = 0; i < strongholds.length; i++) {
             for (int j = 0; j < strongholds[0].length; j++) {
+                if (strongholds[i][j] == null) {
+                    continue;
+                }
                 int playerId = strongholds[i][j].getOwner().getPlayerId();
                 for (int k = 0; k < players.size(); k++) {
                     if (players.get(k).getPlayerId() == playerId) {

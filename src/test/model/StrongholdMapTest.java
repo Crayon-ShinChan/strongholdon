@@ -3,8 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class StrongholdMapTest {
     private static final int SMALL_WIDTH = 6;
@@ -37,25 +36,57 @@ class StrongholdMapTest {
     @Test
     public void testStartMatchTwoPlayers() {
         int[][] positionListForStrongMap = getPositionListForTwoPlayers(strongholdMap);
+        for (int i = 0; i < 2; i++) {
+            strongholdMap.addPlayer();
+        }
         combineTestStartMatch(strongholdMap, positionListForStrongMap, 2);
         int[][] positionListForSmallMap = getPositionListForTwoPlayers(smallMap);
+        for (int i = 0; i < 2; i++) {
+            smallMap.addPlayer();
+        }
         combineTestStartMatch(smallMap, positionListForSmallMap, 2);
     }
 
     @Test
     public void testStartMatchThreePlayers() {
         int[][] positionListForStrongMap = getPositionListForThreePlayers(strongholdMap);
+        for (int i = 0; i < 3; i++) {
+            strongholdMap.addPlayer();
+        }
         combineTestStartMatch(strongholdMap, positionListForStrongMap, 3);
-        int[][] positionListForSmallMap = getPositionListForThreePlayers(strongholdMap);
+        int[][] positionListForSmallMap = getPositionListForThreePlayers(smallMap);
+        for (int i = 0; i < 3; i++) {
+            smallMap.addPlayer();
+        }
         combineTestStartMatch(smallMap, positionListForSmallMap, 3);
     }
 
     @Test
     public void testStartMatchFourPlayers() {
         int[][] positionListForStrongMap = getPositionListForFourPlayers(strongholdMap);
+        for (int i = 0; i < 4; i++) {
+            strongholdMap.addPlayer();
+        }
         combineTestStartMatch(strongholdMap, positionListForStrongMap, 4);
-        int[][] positionListForSmallMap = getPositionListForFourPlayers(strongholdMap);
+        int[][] positionListForSmallMap = getPositionListForFourPlayers(smallMap);
+        for (int i = 0; i < 4; i++) {
+            smallMap.addPlayer();
+        }
         combineTestStartMatch(smallMap, positionListForSmallMap, 4);
+    }
+
+    @Test
+    public void testStartMatchWithPlayerPositionOccupyExistStronghold() {
+        int[][] positionListForStrongMap = getPositionListForTwoPlayers(strongholdMap);
+        for (int i = 0; i < 2; i++) {
+            strongholdMap.addPlayer();
+        }
+        strongholdMap.addStronghold(new Stronghold(
+                strongholdMap.getPlayers().get(1),
+                positionListForStrongMap[0][0],
+                positionListForStrongMap[0][1]
+        ));
+        combineTestStartMatch(strongholdMap, positionListForStrongMap, 2);
     }
 
     // TODO: ask is it necessary to use for loop here for avoiding duplicated code?
@@ -86,7 +117,7 @@ class StrongholdMapTest {
     //  if yes for the last question, should I write a function without @Test tag
     //  but the body is same as testStartMatchWithPlayerPosition, then call this function here?
     @Test
-    public void testStartMatchWithPlayerPositionOccupyExistStronghold() {
+    public void testStartMatchWithPlayerPositionWithPlayerPositionOccupyExistStronghold() {
         strongholdMap.addStronghold(new Stronghold(player2, player1.getPosX(), player2.getPosY()));
         strongholdMap.addStronghold(new Stronghold(player2, 1, 1));
         strongholdMap.addPlayerWithData(player1);
@@ -113,7 +144,8 @@ class StrongholdMapTest {
         strongholdMap.addPlayer();
         assertEquals(1, strongholdMap.getPlayers().size());
         // TODO: change it to test player directly, also change test stronghold
-        combineTestPlayer(strongholdMap.getPlayers().get(0), 1, null, null, strongholdMap);
+
+        combineTestPlayerWithNullPosition(strongholdMap.getPlayers().get(0), 1, strongholdMap);
     }
 
     @Test
@@ -121,8 +153,8 @@ class StrongholdMapTest {
         strongholdMap.addPlayer();
         strongholdMap.addPlayer();
         assertEquals(2, strongholdMap.getPlayers().size());
-        combineTestPlayer(strongholdMap.getPlayers().get(0), 1, null, null, strongholdMap);
-        combineTestPlayer(strongholdMap.getPlayers().get(1), 2, null, null, strongholdMap);
+        combineTestPlayerWithNullPosition(strongholdMap.getPlayers().get(0), 1, strongholdMap);
+        combineTestPlayerWithNullPosition(strongholdMap.getPlayers().get(1), 2, strongholdMap);
     }
 
     @Test
@@ -188,12 +220,13 @@ class StrongholdMapTest {
 
     @Test
     public void testCalScores() {
-        Stronghold sh1 = new Stronghold(player1, 0, 0);
-        Stronghold sh2 = new Stronghold(player2, 0, 1);
         Stronghold sh3 = new Stronghold(player1, 1, 0);
+        strongholdMap.addPlayerWithData(player1);
+        strongholdMap.addPlayerWithData(player2);
         strongholdMap.addStronghold(sh1);
         strongholdMap.addStronghold(sh2);
         strongholdMap.addStronghold(sh3);
+        strongholdMap.calScores();
         assertEquals(2, player1.getScore());
         assertEquals(1, player2.getScore());
     }
@@ -210,7 +243,14 @@ class StrongholdMapTest {
         assertEquals(playerId, testPlayer.getPlayerId());
         assertEquals(posX, testPlayer.getPosX());
         assertEquals(posY, testPlayer.getPosY());
-        assertEquals(strongholdMap, testPlayer.getStrongholdMap());
+        assertEquals(testMap, testPlayer.getStrongholdMap());
+    }
+
+    private void combineTestPlayerWithNullPosition(Player testPlayer, int playerId, StrongholdMap testMap) {
+        assertEquals(playerId, testPlayer.getPlayerId());
+        assertNull(testPlayer.getPosX());
+        assertNull(testPlayer.getPosY());
+        assertEquals(testMap, testPlayer.getStrongholdMap());
     }
 
     private void combineTestStronghold(Stronghold stronghold, int playerId, int posX, int posY) {
@@ -221,10 +261,7 @@ class StrongholdMapTest {
     }
 
     private void combineTestStartMatch(StrongholdMap testMap, int[][] positionList, int numPlayers) {
-        for (int i = 0; i < numPlayers; i++) {
-            strongholdMap.addPlayer();
-        }
-        strongholdMap.startMatch();
+        testMap.startMatch();
         int matchNum = 0;
         for (int[] position:positionList) {
             int posX = position[0];

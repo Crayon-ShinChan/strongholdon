@@ -58,12 +58,12 @@ public class Player {
     //  if now posX is a customized class written by me, how to design to avoid other class to change it but
     //  the test class still can get its value?
     // EFFECTS: get posX
-    public int getPosX() {
+    public Integer getPosX() {
         return posX;
     }
 
     // EFFECTS: get posY
-    public int getPosY() {
+    public Integer getPosY() {
         return posY;
     }
 
@@ -111,11 +111,12 @@ public class Player {
     private boolean movePlayer(String direction) {
         int newPosX = posX;
         int newPosY = posY;
-        if (direction == "w") {
+        // TODO: try switch here
+        if (direction.equals("w")) {
             newPosX--;
-        } else if (direction == "s") {
+        } else if (direction.equals("s")) {
             newPosX++;
-        } else if (direction == "a") {
+        } else if (direction.equals("a")) {
             newPosY--;
         } else {
             newPosY++;
