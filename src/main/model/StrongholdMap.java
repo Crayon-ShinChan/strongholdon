@@ -9,14 +9,14 @@ public class StrongholdMap {
     // TODO: Ask TA for help: final without static should be fields or constant like WIDTH, should they be public?
     public final int width;
     public final int height;
-    private Stronghold[][] map;
+    private Stronghold[][] strongholds;
     private ArrayList<Player> players;
 
     // EFFECTS: construct a map with no stronghold, player and with the fixed WIDTH and HEIGHT
     public StrongholdMap() {
         this.width = DEFAULT_WIDTH;
         this.height = DEFAULT_HEIGHT;
-        this.map = new Stronghold[this.width][this.height];
+        this.strongholds = new Stronghold[this.width][this.height];
         // stub
     }
 
@@ -26,7 +26,7 @@ public class StrongholdMap {
         this.width = width;
         this.height = height;
         // TODO: ask if there is any way to eliminate the duplicated rows in different constructors
-        this.map = new Stronghold[this.width][this.height];
+        this.strongholds = new Stronghold[this.width][this.height];
         // stub
     }
 
@@ -72,6 +72,22 @@ public class StrongholdMap {
     // MODIFIES: this
     // EFFECTS: calculate the current scores for the current player who moved just now
     public void calScores() {
+        // stub
+    }
+
+    // TODO: ask should I make it private?
+    // EFFECTS: return list of players in the map
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    // EFFECTS: return list of strongholds in the map
+    public Stronghold[][] getStrongholds() {
+        return strongholds;
+    }
+
+    // EFFECTS: print strongholds using player id
+    public void printStrongholds() {
         // stub
     }
 }

@@ -24,7 +24,7 @@ public class Player {
     }
 
     // TODO: change the direction inputs for multiple players playing simultaneously
-    // REQUIRES: direction is one of ["w", "a", "s", "d"]
+    // REQUIRES: direction is one of ["w", "a", "s", "d"] from the keyboard
     // MODIFIES: this
     // EFFECTS: move the player to another stronghold with speed of 1
     //          the player can occupy the destination if he successfully gets to the destination
@@ -32,7 +32,8 @@ public class Player {
     //          if there is another players in the destination or the destination is out of the map
     //            - return false
     //          otherwise, return true
-    private boolean move(String direction) {
+    public boolean move(String direction) {
+        // lowercase first
         return false;
         //stub
     }
