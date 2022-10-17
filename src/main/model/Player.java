@@ -145,9 +145,64 @@ public class Player {
         return true;
     }
 
+    // TODO: ask what is the best format if the code in if is too long
     // MODIFIES: this
     // EFFECTS: change the owner as the player for new strongholds occupied by the player
     private void occupyStrongholds() {
         strongholdMap.occupyStronghold(posX, posY, this);
+        boolean[][] visited = new boolean[strongholdMap.height][strongholdMap.width];
+        for (int i = 0; i < strongholdMap.height; i++) {
+            for (int j = 0; j < strongholdMap.width; j++) {
+                if (
+                        !visited[i][j]
+                        && (
+                                strongholdMap.getStrongholds()[i][j] == null
+                                || strongholdMap.getStrongholds()[i][j].getOwner() != this
+                        )
+                ) {
+                    ArrayList<int[]> block = new ArrayList<>();
+                    if (searchBlockInCircle(i, j, block, visited, this)) {
+                        occupyBlock(block, this);
+                    }
+                }
+            }
+        }
+    }
+
+    // TODO: ask if we should write modifies local variable from the previous function
+    //  Is it the best practice to write row as posX? we also have field posX. What is the best practice?
+    // MODIFIES: block, visited
+    // EFFECTS: find the connected block and return true if the block is surrounded; otherwise, return false
+    private boolean searchBlockInCircle(int row, int col, ArrayList<int[]> block, boolean[][] visited, Player p) {
+        if (row == -1 || row == strongholdMap.height || col == -1 || col == strongholdMap.width) {
+            return false;
+        }
+        Stronghold sh = strongholdMap.getStrongholds()[row][col];
+        if ((sh != null && sh.getOwner() == p) || visited[row][col]) {
+            return true;
+        }
+        visited[row][col] = true;
+        block.add(new int[]{row, col});
+        return searchNeighbor(row, col, block, visited, p);
+    }
+
+    // MODIFIES: res
+    // EFFECTS: search strongholds around the stronghold in the position (row, col)
+    private boolean searchNeighbor(int row, int col, ArrayList<int[]> block, boolean[][] visited, Player p) {
+        boolean isSurrounded = true;
+        int[] deltaX = new int[]{-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] deltaY = new int[]{-1, 0, 1, -1, 1, -1, 0, 1};
+        for (int i = 0; i < deltaX.length; i++) {
+            isSurrounded &= searchBlockInCircle(row + deltaX[i], col + deltaY[i], block, visited, p);
+        }
+        return isSurrounded;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: occupy the strongholds in the circle as a block
+    private void occupyBlock(ArrayList<int[]> block, Player p) {
+        for (int[] pos:block) {
+            strongholdMap.occupyStronghold(pos[0], pos[1], p);
+        }
     }
 }
