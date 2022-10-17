@@ -1,14 +1,16 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 // Represents a player in the game
 public class Player {
-    // TODO: Ask TA for help: playerId will not change for the player, should I use final here?
+    // TODO: can playerId be public since it will not change after construction
     private final int playerId;
     private Integer posX; // Integer can be null
     private Integer posY;
     private int score;
+    private StrongholdMap strongholdMap;
     // private ArrayList<Stronghold> newStronghold;
     // private String color;
 
@@ -18,9 +20,12 @@ public class Player {
     // EFFECTS: playerId is set to a positive integer
     //          posX and posY is set within the map
     //          score is set to be 0
-    public Player(int playerId, int posX, int posY) {
+    public Player(int playerId, Integer posX, Integer posY, StrongholdMap strongholdMap) {
         this.playerId = playerId;
-        //stub
+        this.posX = posX;
+        this.posY = posY;
+        this.score = 0;
+        this.strongholdMap = strongholdMap;
     }
 
     // TODO: change the direction inputs for multiple players playing simultaneously
@@ -33,14 +38,12 @@ public class Player {
     //            - return false
     //          otherwise, return true
     public boolean move(String direction) {
-        // lowercase first
-        return false;
-        //stub
-    }
-
-    // EFFECTS: set score of the player
-    public void setScore(int score) {
-        this.score = score;
+        direction = direction.toLowerCase();
+        if (!movePlayer(direction)) {
+            return false;
+        }
+        occupyStrongholds();
+        return true;
     }
 
     // EFFECTS: get playerId
@@ -67,5 +70,86 @@ public class Player {
     // EFFECTS: get score
     public int getScore() {
         return score;
+    }
+
+    // EFFECTS: get strongholdMap of the player
+    public StrongholdMap getStrongholdMap() {
+        return strongholdMap;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set new posX
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set new posY
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set score of the player
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: set strongholdMap of the player
+    public void setStrongholdMap(StrongholdMap strongholdMap) {
+        this.strongholdMap = strongholdMap;
+    }
+
+    // TODO: should we write the detail about the effects again? which are written in move function
+    // REQUIRES: direction is one of ["w", "a", "s", "d"] from the keyboard
+    // MODIFIES: this
+    // EFFECTS: move the player to another stronghold with speed of 1
+    //          if there is another players in the destination or the destination is out of the map
+    //            - return false
+    //          otherwise, return true
+    private boolean movePlayer(String direction) {
+        int newPosX = posX;
+        int newPosY = posY;
+        if (direction == "w") {
+            newPosX--;
+        } else if (direction == "s") {
+            newPosX++;
+        } else if (direction == "a") {
+            newPosY--;
+        } else {
+            newPosY++;
+        }
+
+        if (checkMovementValidity(newPosX, newPosY)) {
+            posX = newPosX;
+            posY = newPosY;
+            return true;
+        }
+
+        return false;
+    }
+
+    // EFFECTS: if there is another players in the destination or the destination is out of the map
+    //            - return false
+    //          otherwise, return true
+    private boolean checkMovementValidity(int newPosX, int newPosY) {
+        for (Player player:strongholdMap.getPlayers()) {
+            if (player != this && player.getPosX() == newPosX && player.getPosY() == newPosY) {
+                return false;
+            }
+        }
+        if (newPosX < 0 || newPosX >= strongholdMap.height || newPosY < 0 || newPosY >= strongholdMap.width) {
+            posX = newPosX;
+            posY = newPosY;
+            return false;
+        }
+        return true;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: change the owner as the player for new strongholds occupied by the player
+    private void occupyStrongholds() {
+        strongholdMap.occupyStronghold(posX, posY, this);
     }
 }

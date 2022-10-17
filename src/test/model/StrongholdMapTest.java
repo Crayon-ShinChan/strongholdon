@@ -12,13 +12,16 @@ class StrongholdMapTest {
 
     private StrongholdMap smallMap, strongholdMap;
     private Player player1, player2;
+    Stronghold sh1, sh2;
 
     @BeforeEach
     public void beforeRun() {
         smallMap = new StrongholdMap(SMALL_HEIGHT, SMALL_WIDTH);
         strongholdMap = new StrongholdMap();
-        player1 = new Player(1, 0, 0);
-        player2 = new Player(2, 0, 1);
+        player1 = new Player(1, 0, 0, null);
+        player2 = new Player(2, 0, 1, null);
+        sh1 = new Stronghold(player1, 0, 0);
+        sh2 = new Stronghold(player2, 0, 1);
     }
 
     // TODO: ask can I use this method to avoid duplicated code?
@@ -73,6 +76,8 @@ class StrongholdMapTest {
                 player2.getPosX(),
                 player2.getPosY()
         );
+        assertEquals(1, player1.getScore());
+        assertEquals(1, player2.getScore());
     }
 
     // TODO: ask if I write the code like firstly set the stronghold and then call testStartMatchWithPlayerPosition
@@ -82,9 +87,10 @@ class StrongholdMapTest {
     //  but the body is same as testStartMatchWithPlayerPosition, then call this function here?
     @Test
     public void testStartMatchWithPlayerPositionOccupyExistStronghold() {
+        strongholdMap.addStronghold(new Stronghold(player2, player1.getPosX(), player2.getPosY()));
+        strongholdMap.addStronghold(new Stronghold(player2, 1, 1));
         strongholdMap.addPlayerWithData(player1);
         strongholdMap.addPlayerWithData(player2);
-        strongholdMap.addStronghold(new Stronghold(player1, player2.getPosX(), player2.getPosY()));
         strongholdMap.startMatchWithPlayerPosition();
         combineTestStronghold(
                 strongholdMap.getStrongholds()[player1.getPosX()][player1.getPosY()],
@@ -98,13 +104,16 @@ class StrongholdMapTest {
                 player2.getPosX(),
                 player2.getPosY()
         );
+        assertEquals(1, player1.getScore());
+        assertEquals(2, player2.getScore());
     }
 
     @Test
     public void testAddPlayerOneTime() {
         strongholdMap.addPlayer();
         assertEquals(1, strongholdMap.getPlayers().size());
-        combineTestPlayer(strongholdMap.getPlayers().get(0), 1, null, null);
+        // TODO: change it to test player directly, also change test stronghold
+        combineTestPlayer(strongholdMap.getPlayers().get(0), 1, null, null, strongholdMap);
     }
 
     @Test
@@ -112,8 +121,8 @@ class StrongholdMapTest {
         strongholdMap.addPlayer();
         strongholdMap.addPlayer();
         assertEquals(2, strongholdMap.getPlayers().size());
-        combineTestPlayer(strongholdMap.getPlayers().get(0), 1, null, null);
-        combineTestPlayer(strongholdMap.getPlayers().get(1), 2, null, null);
+        combineTestPlayer(strongholdMap.getPlayers().get(0), 1, null, null, strongholdMap);
+        combineTestPlayer(strongholdMap.getPlayers().get(1), 2, null, null, strongholdMap);
     }
 
     @Test
@@ -124,7 +133,8 @@ class StrongholdMapTest {
                 strongholdMap.getPlayers().get(0),
                 player1.getPlayerId(),
                 player1.getPosX(),
-                player1.getPosY()
+                player1.getPosY(),
+                strongholdMap
         );
     }
 
@@ -137,31 +147,43 @@ class StrongholdMapTest {
                 strongholdMap.getPlayers().get(0),
                 player1.getPlayerId(),
                 player1.getPosX(),
-                player1.getPosY()
+                player1.getPosY(),
+                strongholdMap
         );
         combineTestPlayer(
                 strongholdMap.getPlayers().get(1),
                 player2.getPlayerId(),
                 player2.getPosX(),
-                player2.getPosY()
+                player2.getPosY(),
+                strongholdMap
         );
     }
 
     @Test
     public void testAddStrongholdOneTime() {
-        Stronghold sh1 = new Stronghold(player1, 0, 0);
         strongholdMap.addStronghold(sh1);
         combineTestStronghold(sh1, player1.getPlayerId(), 0, 0);
     }
 
     @Test
     public void testAddStrongholdTwoTimes() {
-        Stronghold sh1 = new Stronghold(player1, 0, 0);
-        Stronghold sh2 = new Stronghold(player2, 0, 1);
         strongholdMap.addStronghold(sh1);
         strongholdMap.addStronghold(sh2);
         combineTestStronghold(sh1, player1.getPlayerId(), 0, 0);
         combineTestStronghold(sh2, player2.getPlayerId(), 0, 1);
+    }
+
+    @Test
+    public void testOccupyStronghold() {
+        strongholdMap.occupyStronghold(sh1.getPosX(), sh2.getPosY(), player1);
+        combineTestStronghold(sh1, player1.getPlayerId(), 0, 0);
+    }
+
+    @Test
+    public void testOccupyStrongholdWithOwner() {
+        strongholdMap.occupyStronghold(sh1.getPosX(), sh2.getPosY(), player2);
+        strongholdMap.occupyStronghold(sh1.getPosX(), sh2.getPosY(), player1);
+        combineTestStronghold(sh1, player1.getPlayerId(), 0, 0);
     }
 
     @Test
@@ -184,10 +206,11 @@ class StrongholdMapTest {
         assertEquals(0, testMap.getPlayers().size());
     }
 
-    private void combineTestPlayer(Player testPlayer, int playerId, Integer posX, Integer posY) {
+    private void combineTestPlayer(Player testPlayer, int playerId, Integer posX, Integer posY, StrongholdMap testMap) {
         assertEquals(playerId, testPlayer.getPlayerId());
         assertEquals(posX, testPlayer.getPosX());
         assertEquals(posY, testPlayer.getPosY());
+        assertEquals(strongholdMap, testPlayer.getStrongholdMap());
     }
 
     private void combineTestStronghold(Stronghold stronghold, int playerId, int posX, int posY) {
@@ -213,6 +236,9 @@ class StrongholdMapTest {
             }
         }
         assertEquals(numPlayers, matchNum);
+        for (Player player: testMap.getPlayers()) {
+            assertEquals(1, player.getScore());
+        }
     }
 
     private int[][] getPositionListForTwoPlayers(StrongholdMap testMap) {

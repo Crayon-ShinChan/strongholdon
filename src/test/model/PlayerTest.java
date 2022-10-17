@@ -29,12 +29,13 @@ public class PlayerTest {
         // create a small map for testing
         strongholdMap1 = new StrongholdMap(SMALL_HEIGHT, SMALL_WIDTH);
         strongholdMap2 = new StrongholdMap(SMALL_HEIGHT, SMALL_WIDTH);
-        playerList.add(new Player(1, 3, 3));
-        playerList.add(new Player(2, 0, 0));
-        playerList.add(new Player(3, SMALL_HEIGHT - 1, SMALL_WIDTH - 1));
+        playerList.add(new Player(1, 3, 3, null));
+        playerList.add(new Player(2, 0, 0, null));
+        playerList.add(new Player(3, SMALL_HEIGHT - 1, SMALL_WIDTH - 1, null));
         // TODO: ask: p4 is just for the test of move when player want to move to another player,
         // TODO: should p4 be tested in constructor?
-        playerList.add(new Player(4, 1, 0));
+        playerList.add(new Player(4, 1, 0, null));
+        playerList.add(new Player(1, 3, 3, null));
         constructMap1();
         constructMap2();
     }
@@ -162,12 +163,12 @@ public class PlayerTest {
     }
 
     private void constructMap1() {
-        strongholdMap1.addPlayerWithData(playerList.get(0));
+        strongholdMap1.addPlayerWithData(playerList.get(playerList.size() - 1));
         strongholdMap1.startMatchWithPlayerPosition();
     }
 
     private void constructMap2() {
-        for (int i = 0; i < min(StrongholdMap.MAX_PLAYER_NUM, playerList.size()); i++) {
+        for (int i = 0; i < min(StrongholdMap.MAX_PLAYER_NUM, playerList.size() - 1); i++) {
             strongholdMap2.addPlayerWithData(playerList.get(i));
         }
         for (int i = 0; i < OWNER_PLAYER_ID.length; i++) {
