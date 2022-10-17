@@ -19,7 +19,7 @@ This will promote friendship, unless they are overly concerned about winning or 
 
 ## User Stories
 
-* As a player, I want to be able to add a stronghold in the map
+* As a player, I want to be able to add multiple strongholds in the map
 * As a player, I want to move my character in the map
 * As a player, I want to choose how many players can play in a game
 * As a player, I want to view the final score of a game
