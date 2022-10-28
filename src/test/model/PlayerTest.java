@@ -35,6 +35,7 @@ public class PlayerTest {
         playerList.add(new Player(3, SMALL_HEIGHT - 1, SMALL_WIDTH - 1, null));
         // TODO: ask: p4 is just for the test of move when player want to move to another player,
         // TODO: should p4 be tested in constructor?
+        //  NOT necessary
         playerList.add(new Player(4, 0, 1, null));
         playerList.add(new Player(1, 3, 3, null));
         constructMap1();
@@ -42,6 +43,7 @@ public class PlayerTest {
     }
 
     // TODO: ask if I should separate testConstructor to testConstructorBorder
+    //  Combine
     @Test
     public void testConstructor() {
         assertEquals(1, playerList.get(0).getPlayerId());
@@ -56,6 +58,7 @@ public class PlayerTest {
     }
 
     // TODO: ask if we should test calScore, which is tested in StrongholdMap test class
+    //  Don't have to test it
     @Test
     public void testMoveOneTime() {
         Player player = strongholdMap1.getPlayers().get(0);
@@ -78,6 +81,7 @@ public class PlayerTest {
     }
 
     // TODO: ask: we've test occupying stronghold above, should we test this again here?
+    //  Not necessary
     @Test
     public void testMoveUp() {
         Player player = strongholdMap1.getPlayers().get(0);
@@ -114,7 +118,6 @@ public class PlayerTest {
     public void testMoveAndGetACircle() {
         Player player = strongholdMap2.getPlayers().get(0);
         assertTrue(player.move("d"));
-        // TODO: ask: should test position again in this test? other tests have tested this
         assertEquals(3, player.getPosX());
         assertEquals(4, player.getPosY());
         combineTestStronghold(strongholdMap2.getStrongholds()[3][4], 1, 3, 4);
@@ -128,6 +131,7 @@ public class PlayerTest {
         Player player = strongholdMap2.getPlayers().get(0);
         assertTrue(player.move("s"));
         // TODO: ask: should test position again in this test? other tests have tested this
+        //  NO
         assertEquals(4, player.getPosX());
         assertEquals(3, player.getPosY());
         combineTestStronghold(strongholdMap2.getStrongholds()[4][3], 1, 4, 3);
@@ -150,6 +154,7 @@ public class PlayerTest {
         Player player = strongholdMap2.getPlayers().get(1);
         assertFalse(player.move("w"));
         // TODO: ask: should test position again in this test? other tests have tested this
+        //  NO
         assertEquals(0, player.getPosX());
         assertEquals(0, player.getPosY());
     }
@@ -158,7 +163,6 @@ public class PlayerTest {
     public void testMoveToAnotherPlayer() {
         Player player = strongholdMap2.getPlayers().get(3);
         assertFalse(player.move("a"));
-        // TODO: ask: should test position again in this test? other tests have tested this
         assertEquals(0, player.getPosX());
         assertEquals(1, player.getPosY());
         // test the stronghold of another player has not changed the owner

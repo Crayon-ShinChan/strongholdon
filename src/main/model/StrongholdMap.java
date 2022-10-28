@@ -1,14 +1,19 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 // Represent the game map containing data of strongholds
 public class StrongholdMap {
+    // TODO: ask "if we make the field private", can we return the object like stronghold directly?
+    //  we can return stronghold, but make sure every field in stronghold is private
     public static final int DEFAULT_HEIGHT = 20; // should be larger than 4
     public static final int DEFAULT_WIDTH = 20; // should be larger than 4
     public static final int MAX_PLAYER_NUM = 4;
     public static final int MIN_PLAYER_NUM = 2;
+
     // TODO: Ask TA for help: final without static should be fields or constant like WIDTH, should they be public?
     public final int height;
     public final int width;
@@ -16,26 +21,26 @@ public class StrongholdMap {
     private ArrayList<Player> players;
 
     // EFFECTS: construct a map with no stronghold, player and with the fixed default width and height
+    // TODO: ask can a constructor call another constructor in the same class?
+    //  NO, we should
     public StrongholdMap() {
         this.height = DEFAULT_HEIGHT;
         this.width = DEFAULT_WIDTH;
         this.strongholds = new Stronghold[this.height][this.width];
-        // TODO: Why Warning:(24, 38) Explicit type argument Player can be replaced with <>?
-        this.players = new ArrayList<Player>();
+        this.players = new ArrayList<>();
     }
 
-    // TODO: ask if there is also a constructor with width and map parameters, how does the computer distinguish them
     // REQUIRES: width >= 4 AND height >= 4;
     // EFFECTS: construct a map with no stronghold, player and with the fixed width and height
     public StrongholdMap(int height, int width) {
         this.height = height;
         this.width = width;
-        // TODO: ask if there is any way to eliminate the duplicated rows in different constructors
         this.strongholds = new Stronghold[this.height][this.width];
-        this.players = new ArrayList<Player>();
+        this.players = new ArrayList<>();
     }
 
     // TODO: ask TA for help: should I constraint size here? players.size() is not an input.
+    //  make sure the size of players in this top function
     // REQUIRES: players.size() >= 2 AND players.size() <= 4
     // MODIFIES: this
     // EFFECTS: assign initial positions and initial strongholds for players
@@ -60,6 +65,7 @@ public class StrongholdMap {
     }
 
     // TODO: ask: this func is mainly for test, should I use a func with different name? or just startMatch?
+    //  Move the function to the test class
     // REQUIRES: players.size() >= MIN_PLAYER_NUM AND players.size() <= MAX_PLAYER_NUM
     //           AND players.get(i).getPosX() != null AND players.get(i).getPosY() != null
     //           AND all players have different initial positions and playerId
@@ -82,6 +88,7 @@ public class StrongholdMap {
 
     // MODIFIES: this
     // EFFECTS: add a player to player list, playerId is a continuously increasing positive number
+    // TODO: make sure the max constraint and may state requires here
     public void addPlayer() {
         players.add(new Player(players.size() + 1, null, null, this));
     }
@@ -147,6 +154,11 @@ public class StrongholdMap {
     public ArrayList<Player> getPlayers() {
         return players;
     }
+
+    // TODO: use like this
+//    public List<Cell> getBodyPositions() {
+//        return Collections.unmodifiableList(body);
+//    }
 
     // EFFECTS: return list of strongholds in the map
     public Stronghold[][] getStrongholds() {

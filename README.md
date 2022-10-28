@@ -23,3 +23,5 @@ This will promote friendship, unless they are overly concerned about winning or 
 * As a player, I want to move my character in the map
 * As a player, I want to choose how many players can play in a game
 * As a player, I want to view the final score of a game
+* As a player, when I quit the unfinished match, I have the option to save all state of the match
+* As a player, when I start the application, I want to be given the option to load my last match from file.

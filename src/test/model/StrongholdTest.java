@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StrongholdTest {
@@ -25,6 +27,7 @@ public class StrongholdTest {
     @Test
     public void testConstructor() {
         // TODO: ask TA for help: Is testing uuid enough for test player? How to test whether two classes are equal?
+        //  euqals check the fields under the objects
         //assertEquals(s1.getOwner(), new Player(1, 0, 0));
         assertEquals(1, sh1.getOwner().getPlayerId());
         assertEquals(0, sh1.getPosX());

@@ -3,9 +3,11 @@ package model;
 // Represent a stronghold occupied by a player
 public class Stronghold {
     // TODO: can posX/posY be public since it will not change after construction
+    //  final object, cannot change the reference, but can change the value in it
     private final int posX;
     private final int posY;
     private Player owner;
+
 
     // REQUIRES: poxX >= 0 AND posX < StrongholdMap.width
     //           AND poxY >= 0  AND posY < StrongholdMap.height

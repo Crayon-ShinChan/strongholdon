@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 // Represents a player in the game
 public class Player {
-    // TODO: can playerId be public since it will not change after construction
     private final int playerId;
+    // TODO: change the posX default value to -1 as null
     private Integer posX; // Integer can be null
     private Integer posY;
     private int score;
@@ -102,6 +102,7 @@ public class Player {
     }
 
     // TODO: should we write the detail about the effects again? which are written in move function
+    //  JUST write the movePlayer part effects
     // REQUIRES: direction is one of ["w", "a", "s", "d"] from the keyboard
     // MODIFIES: this
     // EFFECTS: move the player to another stronghold with speed of 1
