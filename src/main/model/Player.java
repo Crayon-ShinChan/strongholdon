@@ -138,7 +138,7 @@ public class Player {
                 return false;
             }
         }
-        if (newPosX < 0 || newPosX >= strongholdMap.height || newPosY < 0 || newPosY >= strongholdMap.width) {
+        if (newPosX < 0 || newPosX >= strongholdMap.getHeight() || newPosY < 0 || newPosY >= strongholdMap.getWidth()) {
             return false;
         }
         posX = newPosX;
@@ -151,9 +151,9 @@ public class Player {
     // EFFECTS: change the owner as the player for new strongholds occupied by the player
     private void occupyStrongholds() {
         strongholdMap.occupyStronghold(posX, posY, this);
-        boolean[][] visited = new boolean[strongholdMap.height][strongholdMap.width];
-        for (int i = 0; i < strongholdMap.height; i++) {
-            for (int j = 0; j < strongholdMap.width; j++) {
+        boolean[][] visited = new boolean[strongholdMap.getHeight()][strongholdMap.getWidth()];
+        for (int i = 0; i < strongholdMap.getHeight(); i++) {
+            for (int j = 0; j < strongholdMap.getWidth(); j++) {
                 if (
                         !visited[i][j]
                         && (
@@ -175,7 +175,7 @@ public class Player {
     // MODIFIES: block, visited
     // EFFECTS: find the connected block and return true if the block is surrounded; otherwise, return false
     private boolean searchBlockInCircle(int row, int col, ArrayList<int[]> block, boolean[][] visited, Player p) {
-        if (row == -1 || row == strongholdMap.height || col == -1 || col == strongholdMap.width) {
+        if (row == -1 || row == strongholdMap.getHeight() || col == -1 || col == strongholdMap.getWidth()) {
             return false;
         }
         Stronghold sh = strongholdMap.getStrongholds()[row][col];

@@ -231,8 +231,8 @@ class StrongholdMapTest {
     }
 
     private void combineTestConstructor(StrongholdMap testMap, int height, int width) {
-        assertEquals(width, testMap.width);
-        assertEquals(height, testMap.height);
+        assertEquals(width, testMap.getWidth());
+        assertEquals(height, testMap.getHeight());
         assertEquals(height, testMap.getStrongholds().length);
         assertEquals(width, testMap.getStrongholds()[0].length);
         assertEquals(0, testMap.getPlayers().size());
@@ -279,25 +279,25 @@ class StrongholdMapTest {
 
     private int[][] getPositionListForTwoPlayers(StrongholdMap testMap) {
         return new int[][]{
-                {testMap.height / 2, testMap.width / 4},
-                {testMap.height / 2, testMap.width / 4 * 3}
+                {testMap.getHeight() / 2, testMap.getWidth() / 4},
+                {testMap.getHeight() / 2, testMap.getWidth() / 4 * 3}
         };
     }
 
     private int[][] getPositionListForThreePlayers(StrongholdMap testMap) {
         return new int[][]{
-                {testMap.height / 4, testMap.width / 2},
-                {testMap.height / 4 * 3, testMap.width / 4},
-                {testMap.height / 4 * 3, testMap.width / 4 * 3}
+                {testMap.getHeight() / 4, testMap.getWidth() / 2},
+                {testMap.getHeight() / 4 * 3, testMap.getWidth() / 4},
+                {testMap.getHeight() / 4 * 3, testMap.getWidth() / 4 * 3}
         };
     }
 
     private int[][] getPositionListForFourPlayers(StrongholdMap testMap) {
         return new int[][]{
-                {testMap.height / 4, testMap.width / 4},
-                {testMap.height / 4, testMap.width / 4 * 3},
-                {testMap.height / 4 * 3, testMap.width / 4},
-                {testMap.height / 4 * 3, testMap.width / 4 * 3}
+                {testMap.getHeight() / 4, testMap.getWidth() / 4},
+                {testMap.getHeight() / 4, testMap.getWidth() / 4 * 3},
+                {testMap.getHeight() / 4 * 3, testMap.getWidth() / 4},
+                {testMap.getHeight() / 4 * 3, testMap.getWidth() / 4 * 3}
         };
     }
 }

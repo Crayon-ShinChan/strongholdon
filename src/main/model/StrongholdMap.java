@@ -15,8 +15,8 @@ public class StrongholdMap {
     public static final int MIN_PLAYER_NUM = 2;
 
     // TODO: Ask TA for help: final without static should be fields or constant like WIDTH, should they be public?
-    public final int height;
-    public final int width;
+    private final int height;
+    private final int width;
     private Stronghold[][] strongholds;
     private ArrayList<Player> players;
 
@@ -163,6 +163,16 @@ public class StrongholdMap {
     // EFFECTS: return list of strongholds in the map
     public Stronghold[][] getStrongholds() {
         return strongholds;
+    }
+
+    //EFFECTS: returns width
+    public int getWidth() {
+        return width;
+    }
+
+    //EFFECTS: returns height
+    public int getHeight() {
+        return height;
     }
 
     // TODO: ask should we test helper functions? it is implicitly tested by the parent function

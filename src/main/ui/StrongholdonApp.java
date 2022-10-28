@@ -22,7 +22,6 @@ public class StrongholdonApp {
         runStrongholdon();
     }
 
-    // TODO: ask the game name Stringholdon is not the English word, will be wrong for style checker?
     // MODIFIES: this
     // EFFECTS: process the input before a match
     private void runStrongholdon() {
