@@ -1,0 +1,35 @@
+{
+  "height": 9,
+  "width": 9,
+  "strongholds": [
+    {
+      "posX": 3,
+      "posY": 4,
+      "playerId": 1
+    },
+    {
+      "posX": 5,
+      "posY": 6,
+      "playerId": 2
+    },
+    {
+      "posX": 5,
+      "posY": 7,
+      "playerId": 2
+    }
+  ],
+  "players": [
+    {
+      "playerId": 1,
+      "posX": 3,
+      "posY": 4,
+      "score": 1
+    },
+    {
+      "playerId": 2,
+      "posX": 5,
+      "posY": 7,
+      "score": 2
+    }
+  ]
+}

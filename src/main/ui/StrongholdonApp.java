@@ -3,22 +3,31 @@ package ui;
 import model.Player;
 import model.Stronghold;
 import model.StrongholdMap;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 // Game: Strongholdon
 public class StrongholdonApp {
+    private static final String JSON_STORE = "./data/strongholdMap.json";
     private static final int SMALL_HEIGHT = 9;
     private static final int SMALL_WIDTH = 9;
     private StrongholdMap strongholdMap;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: runs the game
     public StrongholdonApp() {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runStrongholdon();
     }
 
@@ -38,9 +47,11 @@ public class StrongholdonApp {
             if (command.equals("q")) {
                 keepApp = false;
             } else if (command.equals("p")) {
-                runMatch();
+                runMatch(false);
             } else if (command.equals("a")) {
                 processAddPlayer();
+            } else if (command.equals("r")) {
+                resumeMatch();
             } else {
                 System.out.println("Command not valid...");
             }
@@ -49,41 +60,73 @@ public class StrongholdonApp {
         System.out.println("\nGoodbye!");
     }
 
+    private void resumeMatch() {
+        try {
+            strongholdMap = jsonReader.read();
+            System.out.println("Resuming the last match");
+            runMatch(true);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
     // EFFECTS: print the menu before a match
     private void displayAppMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\ta -> Add A Player");
         System.out.println("\tp -> Play");
+        System.out.println("\tr -> Resume The Last Match");
         System.out.println("\tq -> Quit");
     }
 
     // TODO: check if style checker count empty lines
     // MODIFIES: this
     // EFFECTS: process the input for the match
-    private void runMatch() {
+    private void runMatch(boolean resume) {
         if (!checkPlayerNum(true)) {
             return;
         }
-        strongholdMap.startMatch();
-        boolean keepMatch = true;
+        if (!resume) {
+            strongholdMap.startMatch();
+        }
+        keepMatch();
+        displayMatchResult();
+        System.out.println("\nGame Over!");
+        strongholdMap = new StrongholdMap(SMALL_HEIGHT, SMALL_WIDTH);
+    }
+
+    // EFFECTS: continue the match
+    private void keepMatch() {
+        boolean inMatch = true;
         int turnNum = 1;
         String command;
-        while (keepMatch) {
+        while (inMatch) {
             displayStrongholdMap();
             displayMatchMenu(turnNum);
             command = input.next();
             command = command.toLowerCase();
             if (command.equals("t")) {
-                keepMatch = calKeepMatch(turnNum);
+                inMatch = calKeepMatch(turnNum);
+            } else if (command.equals("r")) {
+                inMatch = calKeepMatch(turnNum);
+                saveStrongholdMap();
             } else {
                 if (processMoveCommand(turnNum, command)) {
                     turnNum = calNextTurnNum(turnNum);
                 }
             }
         }
-        displayMatchResult();
-        System.out.println("\nGame Over!");
-        strongholdMap = new StrongholdMap(SMALL_HEIGHT, SMALL_WIDTH);
+    }
+
+    private void saveStrongholdMap() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(strongholdMap);
+            jsonWriter.close();
+            System.out.println("Saved the current match" + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
     }
 
     // EFFECTS: return true if the number of players is valid; otherwise return false
@@ -140,6 +183,7 @@ public class StrongholdonApp {
                 "\td -> Move Player " + strongholdMap.getPlayers().get(turnNum - 1).getPlayerId() + " To The Right"
         );
         if (turnNum == 1) {
+            System.out.println("\tr -> Return To Title And Save The Match");
             System.out.println("\tt -> Time Is Up");
         }
     }

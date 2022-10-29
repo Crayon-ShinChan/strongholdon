@@ -1,0 +1,40 @@
+{
+    "strongholds": [
+        {
+            "posX": 3,
+            "posY": 2,
+            "playerId": 1
+        },
+        {
+            "posX": 4,
+            "posY": 2,
+            "playerId": 1
+        },
+        {
+            "posX": 4,
+            "posY": 5,
+            "playerId": 2
+        },
+        {
+            "posX": 4,
+            "posY": 6,
+            "playerId": 2
+        }
+    ],
+    "players": [
+        {
+            "posX": 3,
+            "posY": 2,
+            "score": 2,
+            "playerId": 1
+        },
+        {
+            "posX": 4,
+            "posY": 5,
+            "score": 2,
+            "playerId": 2
+        }
+    ],
+    "width": 9,
+    "height": 9
+}
