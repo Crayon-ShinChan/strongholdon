@@ -158,8 +158,8 @@ public class PlayerTest {
         assertFalse(player.move("a"));
         assertEquals(0, player.getPosX());
         assertEquals(0, player.getPosY());
-        player.setPosX(SMALL_HEIGHT);
-        player.setPosY(SMALL_WIDTH);
+        player.setPosX(SMALL_HEIGHT - 1);
+        player.setPosY(SMALL_WIDTH - 1);
         assertFalse(player.move("d"));
         assertEquals(SMALL_HEIGHT, player.getPosX());
         assertEquals(SMALL_WIDTH, player.getPosY());
