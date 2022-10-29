@@ -61,6 +61,8 @@ public class StrongholdonApp {
         System.out.println("\nGoodbye!");
     }
 
+    // MODIFIES: this
+    // EFFECTS: resume the match
     private void resumeMatch() {
         try {
             strongholdMap = jsonReader.read();
@@ -121,6 +123,7 @@ public class StrongholdonApp {
         }
     }
 
+    // EFFECTS: save the current match to a json file
     private void saveStrongholdMap() {
         try {
             jsonWriter.open();
