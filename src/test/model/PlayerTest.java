@@ -161,11 +161,11 @@ public class PlayerTest {
         player.setPosX(SMALL_HEIGHT - 1);
         player.setPosY(SMALL_WIDTH - 1);
         assertFalse(player.move("d"));
-        assertEquals(SMALL_HEIGHT, player.getPosX());
-        assertEquals(SMALL_WIDTH, player.getPosY());
+        assertEquals(SMALL_HEIGHT - 1, player.getPosX());
+        assertEquals(SMALL_WIDTH - 1, player.getPosY());
         assertFalse(player.move("s"));
-        assertEquals(SMALL_HEIGHT, player.getPosX());
-        assertEquals(SMALL_WIDTH, player.getPosY());
+        assertEquals(SMALL_HEIGHT - 1, player.getPosX());
+        assertEquals(SMALL_WIDTH - 1, player.getPosY());
     }
 
     @Test
