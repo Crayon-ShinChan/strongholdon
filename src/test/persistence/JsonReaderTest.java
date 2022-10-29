@@ -1,5 +1,6 @@
 package persistence;
 
+import exception.PlayerDoesNotExist;
 import model.StrongholdMap;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +21,8 @@ public class JsonReaderTest extends JsonTest {
             fail("IOException expected");
         } catch (IOException e) {
             // pass
+        } catch (PlayerDoesNotExist e) {
+            fail("A stronghold has a player does not exist");
         }
     }
 
@@ -35,6 +38,8 @@ public class JsonReaderTest extends JsonTest {
             assertEquals(0, mp.getPlayers().size());
         } catch (IOException e) {
             fail("Couldn't read from file");
+        } catch (PlayerDoesNotExist e) {
+            fail("A stronghold has a player does not exist");
         }
     }
 
@@ -58,6 +63,31 @@ public class JsonReaderTest extends JsonTest {
             checkPlayers(existPlayers, mp.getPlayers(), mp);
         } catch (IOException e) {
             fail("Couldn't read from file");
+        } catch (PlayerDoesNotExist e) {
+            fail("A stronghold has a player does not exist");
+        }
+    }
+
+    @Test
+    public void testReaderPlayerDoesNotExist() {
+        JsonReader reader = new JsonReader("./data/testReaderPlayerDoesNotExist.json");
+        try {
+            StrongholdMap mp = reader.read();
+            int[][] existStrongholds = {
+                    {3, 4, 1},
+                    {5, 6, 2},
+                    {5, 7, 2},
+            };
+//            int[][] existPlayers = {
+//                    {1, 3, 5, 1},
+//                    {2, 5, 7, 2},
+//            };
+            checkStrongholds(existStrongholds, mp.getStrongholds());
+//            checkPlayers(existPlayers, mp.getPlayers(), mp);
+        } catch (IOException e) {
+            fail("Couldn't read from file");
+        } catch (PlayerDoesNotExist e) {
+            // pass
         }
     }
 }

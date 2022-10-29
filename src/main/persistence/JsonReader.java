@@ -1,5 +1,6 @@
 package persistence;
 
+import exception.PlayerDoesNotExist;
 import model.Player;
 import model.Stronghold;
 import model.StrongholdMap;
@@ -26,7 +27,7 @@ public class JsonReader {
 
     // EFFECTS: reads the state of a match and returns it
     // throws IOException if an error occurs reading data from file
-    public StrongholdMap read() throws IOException {
+    public StrongholdMap read() throws IOException, PlayerDoesNotExist {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseStrongholdMap(jsonObject);
@@ -44,7 +45,7 @@ public class JsonReader {
     }
 
     // EFFECTS: parses the game map from JSON object and returns it
-    private StrongholdMap parseStrongholdMap(JSONObject jsonObject) {
+    private StrongholdMap parseStrongholdMap(JSONObject jsonObject) throws PlayerDoesNotExist {
         int height = jsonObject.getInt("height");
         int width = jsonObject.getInt("width");
         StrongholdMap mp = new StrongholdMap(height, width);
@@ -69,7 +70,7 @@ public class JsonReader {
     }
 
     // EFFECTS: add strongholds into the map
-    private void addStrongholds(StrongholdMap mp, JSONObject jsonObject) {
+    private void addStrongholds(StrongholdMap mp, JSONObject jsonObject) throws PlayerDoesNotExist {
         JSONArray jsonArray = jsonObject.getJSONArray("strongholds");
         for (Object json : jsonArray) {
             JSONObject nextHold = (JSONObject) json;
@@ -83,13 +84,13 @@ public class JsonReader {
     // TODO: exception to handle the player id
     // REQUIRES: playerId should exist
     // EFFECTS: returns player object by searching his id
-    private Player findOwner(int playerId, StrongholdMap mp) {
+    private Player findOwner(int playerId, StrongholdMap mp) throws PlayerDoesNotExist {
         ArrayList<Player> players = mp.getPlayers();
         for (Player p : players) {
             if (p.getPlayerId() == playerId) {
                 return p;
             }
         }
-        return new Player(-1, -1, -1, mp);
+        throw new PlayerDoesNotExist();
     }
 }

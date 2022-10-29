@@ -1,5 +1,6 @@
 package ui;
 
+import exception.PlayerDoesNotExist;
 import model.Player;
 import model.Stronghold;
 import model.StrongholdMap;
@@ -67,6 +68,8 @@ public class StrongholdonApp {
             runMatch(true);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
+        } catch (PlayerDoesNotExist e) {
+            System.out.println("A stronghold has a player does not exist");
         }
     }
 

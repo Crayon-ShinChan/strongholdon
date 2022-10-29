@@ -1,5 +1,6 @@
 package persistence;
 
+import exception.PlayerDoesNotExist;
 import model.StrongholdMap;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +41,7 @@ public class JsonWriterTest extends JsonTest{
             int[][] existStrongholds = new int[0][3];
             checkStrongholds(existStrongholds, mp.getStrongholds());
             assertEquals(0, mp.getPlayers().size());
-        } catch (IOException e) {
+        } catch (IOException | PlayerDoesNotExist e) {
             fail("Exception should not have been thrown");
         }
     }
@@ -50,12 +51,12 @@ public class JsonWriterTest extends JsonTest{
         try {
             writeGeneral();
             readGeneral();
-        } catch (IOException e) {
+        } catch (IOException | PlayerDoesNotExist e) {
             fail("Exception should not have been thrown");
         }
     }
 
-    private void writeGeneral() throws IOException {
+    private void writeGeneral() throws IOException, PlayerDoesNotExist {
         JsonReader reader = new JsonReader("./data/testReaderGeneralMatch.json");
         StrongholdMap mp = reader.read();
         JsonWriter writer = new JsonWriter("./data/testWriterGeneralMatch.json");
@@ -64,7 +65,7 @@ public class JsonWriterTest extends JsonTest{
         writer.close();
     }
 
-    private void readGeneral() throws IOException {
+    private void readGeneral() throws IOException, PlayerDoesNotExist {
         JsonReader reader = new JsonReader("./data/testReaderGeneralMatch.json");
         StrongholdMap mp = reader.read();
         assertEquals(9, mp.getHeight());
