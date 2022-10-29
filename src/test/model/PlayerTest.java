@@ -176,6 +176,11 @@ public class PlayerTest {
         assertEquals(1, player.getPosY());
         // test the stronghold of another player has not changed the owner
         combineTestStronghold(strongholdMap2.getStrongholds()[0][0], 2, 0, 0);
+        // for code coverage of player.getPosX() == newPosX && player.getPosY() == newPosY
+        assertTrue(player.move("s"));
+        assertTrue(player.move("w"));
+        assertTrue(player.move("s"));
+        assertTrue(player.move("a"));
     }
 
     private void constructMap1() {
