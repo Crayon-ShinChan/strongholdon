@@ -1,12 +1,16 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 // Represent the game map containing data of strongholds
-public class StrongholdMap {
+public class StrongholdMap implements Writable {
     // TODO: ask "if we make the field private", can we return the object like stronghold directly?
     //  we can return stronghold, but make sure every field in stronghold is private
     public static final int DEFAULT_HEIGHT = 20; // should be larger than 4
@@ -143,11 +147,41 @@ public class StrongholdMap {
         }
     }
 
-    // TODO: ask if print function should be moved to ui package?
-//    // EFFECTS: print strongholds using player id
-//    public void printStrongholds() {
-//        // stub
-//    }
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("height", height);
+        json.put("width", width);
+        json.put("strongholds", strongholdsToJson());
+        json.put("players", playersToJson());
+        return json;
+    }
+
+    // EFFECTS: returns strongholds in this map as a JSON array
+    private JSONArray strongholdsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (int i = 0; i < strongholds.length; i++) {
+            for (int j = 0; j < strongholds[0].length; j++) {
+                if (strongholds[i][j] != null) {
+                    jsonArray.put(strongholds[i][j].toJson());
+                }
+            }
+        }
+
+        return jsonArray;
+    }
+
+    // EFFECTS: returns strongholds in this map as a JSON array
+    private JSONArray playersToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Player p : players) {
+            jsonArray.put(p.toJson());
+        }
+
+        return jsonArray;
+    }
 
     // TODO: ask should I make it private?
     // EFFECTS: return list of players in the map

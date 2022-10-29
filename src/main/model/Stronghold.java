@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represent a stronghold occupied by a player
-public class Stronghold {
+public class Stronghold implements Writable {
     // TODO: can posX/posY be public since it will not change after construction
     //  final object, cannot change the reference, but can change the value in it
     private final int posX;
@@ -22,6 +25,15 @@ public class Stronghold {
     // EFFECTS: set the owner of a stronghold
     public void setOwner(Player p) {
         this.owner = p;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("posX", posX);
+        json.put("posY", posY);
+        json.put("playerId", owner.getPlayerId());
+        return json;
     }
 
     // EFFECTS: get posX of a stronghold

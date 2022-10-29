@@ -25,7 +25,7 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     public void testReaderEmptyStrongholdMap() {
-        JsonReader reader = new JsonReader("./data/testEmptyMatch.json");
+        JsonReader reader = new JsonReader("./data/testReaderEmptyMatch.json");
         try {
             StrongholdMap mp = reader.read();
             assertEquals(9, mp.getHeight());
@@ -40,7 +40,7 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     public void testReaderGeneralStrongholdMap() {
-        JsonReader reader = new JsonReader("./data/testGeneralMatch.json");
+        JsonReader reader = new JsonReader("./data/testReaderGeneralMatch.json");
         try {
             StrongholdMap mp = reader.read();
             assertEquals(9, mp.getHeight());

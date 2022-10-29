@@ -1,9 +1,12 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Represents a player in the game
-public class Player {
+public class Player implements Writable {
     private final int playerId;
     // TODO: change the posX default value to -1 as null
     private Integer posX; // Integer can be null
@@ -101,6 +104,16 @@ public class Player {
         this.strongholdMap = strongholdMap;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("playerId", playerId);
+        json.put("posX", posX);
+        json.put("posY", posY);
+        json.put("score", score);
+        return json;
+    }
+
     // TODO: should we write the detail about the effects again? which are written in move function
     //  JUST write the movePlayer part effects
     // REQUIRES: direction is one of ["w", "a", "s", "d"] from the keyboard
@@ -133,7 +146,7 @@ public class Player {
     //            - return false
     //          otherwise, return true
     private boolean checkMovementValidity(int newPosX, int newPosY) {
-        for (Player player:strongholdMap.getPlayers()) {
+        for (Player player : strongholdMap.getPlayers()) {
             if (player != this && player.getPosX() == newPosX && player.getPosY() == newPosY) {
                 return false;
             }
