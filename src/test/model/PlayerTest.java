@@ -153,10 +153,19 @@ public class PlayerTest {
     public void testMoveOutOfMap() {
         Player player = strongholdMap2.getPlayers().get(1);
         assertFalse(player.move("w"));
-        // TODO: ask: should test position again in this test? other tests have tested this
-        //  NO
         assertEquals(0, player.getPosX());
         assertEquals(0, player.getPosY());
+        assertFalse(player.move("a"));
+        assertEquals(0, player.getPosX());
+        assertEquals(0, player.getPosY());
+        player.setPosX(SMALL_HEIGHT);
+        player.setPosY(SMALL_WIDTH);
+        assertFalse(player.move("d"));
+        assertEquals(SMALL_HEIGHT, player.getPosX());
+        assertEquals(SMALL_WIDTH, player.getPosY());
+        assertFalse(player.move("s"));
+        assertEquals(SMALL_HEIGHT, player.getPosX());
+        assertEquals(SMALL_WIDTH, player.getPosY());
     }
 
     @Test
