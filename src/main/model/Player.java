@@ -159,7 +159,6 @@ public class Player implements Writable {
         return true;
     }
 
-    // TODO: ask what is the best format if the code in if is too long
     // MODIFIES: this
     // EFFECTS: change the owner as the player for new strongholds occupied by the player
     private void occupyStrongholds() {
@@ -204,8 +203,8 @@ public class Player implements Writable {
     // EFFECTS: search strongholds around the stronghold in the position (row, col)
     private boolean searchNeighbor(int row, int col, ArrayList<int[]> block, boolean[][] visited, Player p) {
         boolean isSurrounded = true;
-        int[] deltaX = new int[]{-1, -1, -1, 0, 0, 1, 1, 1};
-        int[] deltaY = new int[]{-1, 0, 1, -1, 1, -1, 0, 1};
+        int[] deltaX = new int[]{-1, 0, 0, 1};
+        int[] deltaY = new int[]{0, -1, 1, 0};
         for (int i = 0; i < deltaX.length; i++) {
             isSurrounded &= searchBlockInCircle(row + deltaX[i], col + deltaY[i], block, visited, p);
         }

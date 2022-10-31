@@ -1,54 +1,83 @@
 {
     "strongholds": [
         {
-            "posX": 1,
-            "posY": 4,
-            "playerId": 1
-        },
-        {
-            "posX": 2,
-            "posY": 4,
-            "playerId": 1
-        },
-        {
-            "posX": 6,
+            "posX": 3,
             "posY": 2,
-            "playerId": 2
+            "playerId": 1
         },
         {
-            "posX": 6,
+            "posX": 3,
             "posY": 3,
+            "playerId": 1
+        },
+        {
+            "posX": 3,
+            "posY": 4,
             "playerId": 2
         },
         {
-            "posX": 6,
+            "posX": 3,
             "posY": 5,
-            "playerId": 3
+            "playerId": 2
         },
         {
-            "posX": 6,
+            "posX": 3,
             "posY": 6,
-            "playerId": 3
+            "playerId": 2
+        },
+        {
+            "posX": 4,
+            "posY": 2,
+            "playerId": 1
+        },
+        {
+            "posX": 4,
+            "posY": 3,
+            "playerId": 1
+        },
+        {
+            "posX": 4,
+            "posY": 4,
+            "playerId": 2
+        },
+        {
+            "posX": 4,
+            "posY": 5,
+            "playerId": 2
+        },
+        {
+            "posX": 4,
+            "posY": 6,
+            "playerId": 2
+        },
+        {
+            "posX": 5,
+            "posY": 3,
+            "playerId": 1
+        },
+        {
+            "posX": 5,
+            "posY": 4,
+            "playerId": 2
+        },
+        {
+            "posX": 5,
+            "posY": 5,
+            "playerId": 2
         }
     ],
     "players": [
         {
-            "posX": 1,
-            "posY": 4,
-            "score": 2,
+            "posX": 5,
+            "posY": 3,
+            "score": 5,
             "playerId": 1
         },
         {
-            "posX": 6,
-            "posY": 3,
-            "score": 2,
-            "playerId": 2
-        },
-        {
-            "posX": 6,
+            "posX": 5,
             "posY": 5,
-            "score": 2,
-            "playerId": 3
+            "score": 8,
+            "playerId": 2
         }
     ],
     "width": 9,

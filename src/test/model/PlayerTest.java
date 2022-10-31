@@ -12,13 +12,13 @@ public class PlayerTest {
     private static final int SMALL_WIDTH = 6;
     private static final int SMALL_HEIGHT = 6;
     private static final int[] OWNER_PLAYER_ID = {
-            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     };
     private static final int[] POS_X = {
-            1, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4
+            1, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4
     };
     private static final int[] POS_Y = {
-            4, 3, 4, 5, 1, 2, 3, 5, 1, 3, 5, 1, 3, 5, 1, 2, 4, 5
+            4, 3, 4, 5, 1, 2, 3, 5, 1, 3, 5, 1, 3, 5, 2, 4, 5
     };
 
     private StrongholdMap strongholdMap1, strongholdMap2;
