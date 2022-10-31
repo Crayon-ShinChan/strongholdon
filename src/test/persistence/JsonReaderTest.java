@@ -17,7 +17,6 @@ public class JsonReaderTest extends JsonTest {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {
             StrongholdMap mp = reader.read();
-            // TODO: to learn what is fail
             fail("IOException expected");
         } catch (IOException e) {
             // pass
@@ -78,12 +77,8 @@ public class JsonReaderTest extends JsonTest {
                     {5, 6, 2},
                     {5, 7, 2},
             };
-//            int[][] existPlayers = {
-//                    {1, 3, 5, 1},
-//                    {2, 5, 7, 2},
-//            };
             checkStrongholds(existStrongholds, mp.getStrongholds());
-//            checkPlayers(existPlayers, mp.getPlayers(), mp);
+            fail("PlayerDoesNotExist expected");
         } catch (IOException e) {
             fail("Couldn't read from file");
         } catch (PlayerDoesNotExist e) {
