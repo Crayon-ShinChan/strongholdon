@@ -56,9 +56,11 @@ public class Drawer {
     }
 
     private void drawMatch() {
-//        g2.setColor(Color.yellow);
-//        g2.fillRect(0, 0, SCREEN_WIDTH, DEFAULT_HEIGHT * TILE_SIZE);
-        drawLandInMatch();
+        g2.setColor(new Color(0xEABC52));
+        g2.fillRect(0, 0, SCREEN_WIDTH, DEFAULT_HEIGHT * TILE_SIZE);
+        g2.setColor(Color.white);
+        g2.fillRect(0, DEFAULT_HEIGHT * TILE_SIZE, SCREEN_WIDTH, (SCREEN_HEIGHT - DEFAULT_HEIGHT * TILE_SIZE));
+//        drawLandInMatch();
 
         drawStrongholdInMatch();
         drawPlayerInMatch();
