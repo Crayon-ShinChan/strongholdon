@@ -32,7 +32,6 @@ public class GamePanel extends JPanel implements Runnable {
         // keep listening?
         this.setFocusable(true);
         this.gameState = GameState.TITLE_SCREEN;
-        this.drawer = new Drawer(this);
     }
 
     @Override
@@ -69,7 +68,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void startGameThread() {
-        gameThread = new Thread();
+        gameThread = new Thread(this);
         gameThread.start();
     }
 

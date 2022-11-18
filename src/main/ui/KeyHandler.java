@@ -25,13 +25,7 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
         GameState gs = gp.getGameState();
         if (gs == GameState.TITLE_SCREEN) {
-            if (code == KeyEvent.VK_W) {
-                drawer.decreaseMenuCursorNum();
-            }
-            if (code == KeyEvent.VK_S) {
-                System.out.println("downPressed");
-                drawer.increaseMenuCursorNum();
-            }
+            keyPressedHandlerTitleScreen(code);
         }
 //        if (code == KeyEvent.VK_W) {
 //            upPressed = true;
@@ -46,6 +40,27 @@ public class KeyHandler implements KeyListener {
 //            rightPressed = true;
 //        }
     }
+
+    private void keyPressedHandlerTitleScreen(int code) {
+        if (code == KeyEvent.VK_W) {
+            drawer.decreaseMenuCursorNum();
+        }
+        if (code == KeyEvent.VK_S) {
+            drawer.increaseMenuCursorNum();
+        }
+        if (code == KeyEvent.VK_ENTER) {
+            int cursorNum = drawer.getMenuCursorNum();
+            if (cursorNum == 0) {
+                gp.changeGameState(GameState.CHOOSING_PLAYER);
+            } else if (cursorNum == 1) {
+                // TODO: load game
+                gp.changeGameState(GameState.MATCH);
+            } else if (cursorNum == 2) {
+                System.exit(0);
+            }
+        }
+    }
+
 
     @Override
     public void keyReleased(KeyEvent e) {

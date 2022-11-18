@@ -48,6 +48,10 @@ public class Drawer {
         menu.decreaseCursorNum();
     }
 
+    public int getMenuCursorNum() {
+        return menu.getCursorNum();
+    }
+
     public void initialMenu() {
         GameState gs = gp.getGameState();
         String[] menuList;
@@ -61,15 +65,13 @@ public class Drawer {
     }
 
     private void drawTitleScreen() {
-        g2.setColor(new Color(234, 188, 82));
+        g2.setColor(new Color(0xEABC52));
         g2.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         // title
         drawTitle();
 
         // menu
-        String[] menuList = {"NEW GAME", "RESUME GAME", "QUIT"};
-        menu = new Menu(menuList);
         menu.draw(g2, TILE_SIZE * 9);
     }
 
