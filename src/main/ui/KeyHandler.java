@@ -1,7 +1,10 @@
 package ui;
 
+import model.Player;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class KeyHandler implements KeyListener {
     private GamePanel gp;
@@ -28,19 +31,39 @@ public class KeyHandler implements KeyListener {
             keyPressedHandlerTitleScreen(code);
         } else if (gs == GameState.CHOOSING_PLAYER) {
             keyPressedHandlerChoosingPlayer(code);
+        } else if (gs == GameState.MATCH) {
+            keyPressedHandlerMatch(code);
         }
-//        if (code == KeyEvent.VK_W) {
-//            upPressed = true;
-//        }
-//        if (code == KeyEvent.VK_S) {
-//            downPressed = true;
-//        }
-//        if (code == KeyEvent.VK_A) {
-//            leftPressed = true;
-//        }
-//        if (code == KeyEvent.VK_D) {
-//            rightPressed = true;
-//        }
+    }
+
+    private void keyPressedHandlerMatch(int code) {
+        if (code == KeyEvent.VK_ESCAPE) {
+            gp.changeGameState(GameState.PAUSE);
+        }
+        ArrayList<Player> playerList = gp.getStrongholdMap().getPlayers();
+        int[][] keyMap = {
+                {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D},
+                {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT},
+                {KeyEvent.VK_I, KeyEvent.VK_K, KeyEvent.VK_J, KeyEvent.VK_L}
+        };
+        for (int i = 0; i < playerList.size(); i++) {
+            keyPressedHandlerMatchMovePlayer(code, playerList.get(i), keyMap[i]);
+        }
+    }
+
+    private void keyPressedHandlerMatchMovePlayer(int code, Player player, int[] keyMap) {
+        if (code == keyMap[0]) {
+            player.move("w");
+        }
+        if (code == keyMap[1]) {
+            player.move("s");
+        }
+        if (code == keyMap[2]) {
+            player.move("a");
+        }
+        if (code == keyMap[3]) {
+            player.move("d");
+        }
     }
 
     private void keyPressedHandlerChoosingPlayer(int code) {
