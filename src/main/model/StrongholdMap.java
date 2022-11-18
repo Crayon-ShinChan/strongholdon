@@ -9,24 +9,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import static ui.GamePanel.MAX_SCREEN_HEIGHT;
+import static ui.GamePanel.MAX_SCREEN_WIDTH;
+
 // Represent the game map containing data of strongholds
 public class StrongholdMap implements Writable {
-    // TODO: ask "if we make the field private", can we return the object like stronghold directly?
-    //  we can return stronghold, but make sure every field in stronghold is private
-    public static final int DEFAULT_HEIGHT = 20; // should be larger than 4
-    public static final int DEFAULT_WIDTH = 20; // should be larger than 4
+    public static final int DEFAULT_HEIGHT = MAX_SCREEN_HEIGHT; // should be larger than 4
+    public static final int DEFAULT_WIDTH = MAX_SCREEN_WIDTH; // should be larger than 4
     public static final int MAX_PLAYER_NUM = 4;
     public static final int MIN_PLAYER_NUM = 2;
 
-    // TODO: Ask TA for help: final without static should be fields or constant like WIDTH, should they be public?
     private final int height;
     private final int width;
     private Stronghold[][] strongholds;
     private ArrayList<Player> players;
 
     // EFFECTS: construct a map with no stronghold, player and with the fixed default width and height
-    // TODO: ask can a constructor call another constructor in the same class?
-    //  NO, we should
     public StrongholdMap() {
         this.height = DEFAULT_HEIGHT;
         this.width = DEFAULT_WIDTH;
@@ -43,8 +41,6 @@ public class StrongholdMap implements Writable {
         this.players = new ArrayList<>();
     }
 
-    // TODO: ask TA for help: should I constraint size here? players.size() is not an input.
-    //  make sure the size of players in this top function
     // REQUIRES: players.size() >= 2 AND players.size() <= 4
     // MODIFIES: this
     // EFFECTS: assign initial positions and initial strongholds for players
@@ -68,8 +64,7 @@ public class StrongholdMap implements Writable {
         calScores();
     }
 
-    // TODO: ask: this func is mainly for test, should I use a func with different name? or just startMatch?
-    //  Move the function to the test class
+    // TODO: ask: Move the function to the test class
     // REQUIRES: players.size() >= MIN_PLAYER_NUM AND players.size() <= MAX_PLAYER_NUM
     //           AND players.get(i).getPosX() != null AND players.get(i).getPosY() != null
     //           AND all players have different initial positions and playerId
@@ -97,7 +92,6 @@ public class StrongholdMap implements Writable {
         players.add(new Player(players.size() + 1, null, null, this));
     }
 
-    // TODO: ask this is for test, is there any better way?
     // REQUIRES: p
     // MODIFIES: this
     // EFFECTS: add a player to player list without position values
@@ -106,8 +100,6 @@ public class StrongholdMap implements Writable {
         players.add(p);
     }
 
-    // TODO: ask should I test this? I would like make it private and test occupyStronghold
-    //  which implicitly test addStronghold
     // MODIFIES: this
     // EFFECTS: add a stronghold to map
     public void addStronghold(Stronghold s) {
@@ -124,7 +116,6 @@ public class StrongholdMap implements Writable {
         strongholds[posX][posY].setOwner(p);
     }
 
-    // TODO: check the initialized array is always with 0, false or null
     // MODIFIES: this
     // EFFECTS: calculate the current scores for the current player who moved just now
     public void calScores() {
@@ -183,13 +174,12 @@ public class StrongholdMap implements Writable {
         return jsonArray;
     }
 
-    // TODO: ask should I make it private?
+    // TODO: Do it like the following function in Debug Lab
     // EFFECTS: return list of players in the map
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    // TODO: use like this
 //    public List<Cell> getBodyPositions() {
 //        return Collections.unmodifiableList(body);
 //    }
@@ -209,9 +199,6 @@ public class StrongholdMap implements Writable {
         return height;
     }
 
-    // TODO: ask should we test helper functions? it is implicitly tested by the parent function
-    //  how to test a random function? fix random seed?
-    //  The function changes the local variable passed from other function. should I write modifies?
     // MODIFIES: positionList
     // EFFECTS: shuffle positions for players
     private void shufflePositionList(int[][] positionList) {

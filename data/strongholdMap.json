@@ -1,24 +1,19 @@
 {
     "strongholds": [
         {
-            "posX": 3,
+            "posX": 1,
+            "posY": 2,
+            "playerId": 1
+        },
+        {
+            "posX": 2,
             "posY": 2,
             "playerId": 1
         },
         {
             "posX": 3,
-            "posY": 3,
+            "posY": 2,
             "playerId": 1
-        },
-        {
-            "posX": 3,
-            "posY": 4,
-            "playerId": 2
-        },
-        {
-            "posX": 3,
-            "posY": 5,
-            "playerId": 2
         },
         {
             "posX": 3,
@@ -32,51 +27,26 @@
         },
         {
             "posX": 4,
-            "posY": 3,
-            "playerId": 1
-        },
-        {
-            "posX": 4,
-            "posY": 4,
-            "playerId": 2
-        },
-        {
-            "posX": 4,
             "posY": 5,
             "playerId": 2
         },
         {
             "posX": 4,
             "posY": 6,
-            "playerId": 2
-        },
-        {
-            "posX": 5,
-            "posY": 3,
-            "playerId": 1
-        },
-        {
-            "posX": 5,
-            "posY": 4,
-            "playerId": 2
-        },
-        {
-            "posX": 5,
-            "posY": 5,
             "playerId": 2
         }
     ],
     "players": [
         {
-            "posX": 5,
-            "posY": 3,
-            "score": 5,
+            "posX": 1,
+            "posY": 2,
+            "score": 4,
             "playerId": 1
         },
         {
-            "posX": 5,
-            "posY": 5,
-            "score": 8,
+            "posX": 3,
+            "posY": 6,
+            "score": 3,
             "playerId": 2
         }
     ],

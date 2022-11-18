@@ -16,7 +16,6 @@ public class Player implements Writable {
     // private ArrayList<Stronghold> newStronghold;
     // private String color;
 
-    // TODO: add the new fields to EFFECTS if you add the fields later
     // REQUIRES: playerId > 0 AND posX >= 0 AND posX < StrongholdMap.width
     //           AND posY >= 0 AND posY < StrongholdMap.height
     // EFFECTS: playerId is set to a positive integer
@@ -54,12 +53,6 @@ public class Player implements Writable {
         return playerId;
     }
 
-    // TODO: ask here posX is Integer not int, it pass with reference, right?
-    //  which means if other class call this method, they can get the reference and change posX
-    //  if I do not want other class to change the posX, but test class still has to call the func, how to design?
-    //  can we simple change the return type as int rather than integer?
-    //  if now posX is a customized class written by me, how to design to avoid other class to change it but
-    //  the test class still can get its value?
     // EFFECTS: get posX
     public Integer getPosX() {
         return posX;
@@ -114,8 +107,26 @@ public class Player implements Writable {
         return json;
     }
 
-    // TODO: should we write the detail about the effects again? which are written in move function
-    //  JUST write the movePlayer part effects
+    // TODO: apply this
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Player player = (Player) o;
+
+        return playerId == player.playerId;
+    }
+
+    @Override
+    public int hashCode() {
+        return playerId;
+    }
+
     // REQUIRES: direction is one of ["w", "a", "s", "d"] from the keyboard
     // MODIFIES: this
     // EFFECTS: move the player to another stronghold with speed of 1
@@ -182,8 +193,6 @@ public class Player implements Writable {
         }
     }
 
-    // TODO: ask if we should write modifies local variable from the previous function
-    //  Is it the best practice to write row as posX? we also have field posX. What is the best practice?
     // MODIFIES: block, visited
     // EFFECTS: find the connected block and return true if the block is surrounded; otherwise, return false
     private boolean searchBlockInCircle(int row, int col, ArrayList<int[]> block, boolean[][] visited, Player p) {

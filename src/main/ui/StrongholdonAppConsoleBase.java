@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-// Real Strongholdon Game with UI
-public class StrongholdonApp {
+// Game: Strongholdon (Console base)
+public class StrongholdonAppConsoleBase {
     private static final String JSON_STORE = "./data/strongholdMap.json";
     private static final int SMALL_HEIGHT = 9;
     private static final int SMALL_WIDTH = 9;
@@ -24,7 +24,7 @@ public class StrongholdonApp {
     private JsonReader jsonReader;
 
     // EFFECTS: runs the game
-    public StrongholdonApp() {
+    public StrongholdonAppConsoleBase() {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
         jsonWriter = new JsonWriter(JSON_STORE);
