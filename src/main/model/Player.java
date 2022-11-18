@@ -24,6 +24,20 @@ public class Player implements Writable {
     // EFFECTS: playerId is set to a positive integer
     //          posX and posY is set within the map
     //          score is set to be 0
+    public Player(int playerId, int resourceId) {
+        this.playerId = playerId;
+        this.resourceId = resourceId;
+        this.posX = null;
+        this.posY = null;
+        this.score = 0;
+        this.strongholdMap = null;
+    }
+
+    // REQUIRES: playerId > 0 AND posX >= 0 AND posX < StrongholdMap.width
+    //           AND posY >= 0 AND posY < StrongholdMap.height
+    // EFFECTS: playerId is set to a positive integer
+    //          posX and posY is set within the map
+    //          score is set to be 0
     public Player(int playerId, int resourceId, Integer posX, Integer posY, StrongholdMap strongholdMap) {
         this.playerId = playerId;
         this.resourceId = resourceId;

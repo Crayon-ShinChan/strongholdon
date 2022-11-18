@@ -1,6 +1,7 @@
 package ui;
 
 import exception.PlayerDoesNotExist;
+import model.Player;
 import model.StrongholdMap;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -10,6 +11,7 @@ import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
     public static final int ORIGINAL_TILE_SIZE = 24;
@@ -144,5 +146,15 @@ public class GamePanel extends JPanel implements Runnable {
         } catch (PlayerDoesNotExist e) {
             System.out.println("A stronghold has a player does not exist");
         }
+    }
+
+    public void restartMatch() {
+        ArrayList<Player> playerList = getStrongholdMap().getPlayers();
+        strongholdMap = new StrongholdMap();
+        for (Player p : playerList) {
+            Player newPlayer = new Player(p.getPlayerId(), p.getResourceId());
+            strongholdMap.addPlayerWithData(newPlayer);
+        }
+        strongholdMap.startMatch();
     }
 }

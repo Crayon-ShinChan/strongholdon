@@ -17,6 +17,8 @@ import static model.StrongholdMap.*;
 import static ui.GamePanel.*;
 
 public class Drawer {
+    public static final int[] playerColor = {0x40577e, 0xa04946, 0x768c3d};
+
     private GamePanel gp;
     private Graphics2D g2;
     private Font maruMonicaFont;
@@ -64,11 +66,56 @@ public class Drawer {
         g2.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
         menu.draw(g2, TILE_SIZE * 11);
-        drawPlayerResults();
+        drawResults();
     }
 
-    private void drawPlayerResults() {
+    private void drawResults() {
+        int imageSize = TILE_SIZE * 3;
+        int space = TILE_SIZE * 2;
+        ArrayList<Player> playersList = gp.getStrongholdMap().getPlayers();
+        drawResultsPlayer(imageSize, space, playersList);
+        drawResultsScore(imageSize, space, playersList);
+    }
 
+    private void drawResultsScore(int imageSize, int space, ArrayList<Player> playersList) {
+        int x = getStartXForPlayerList(imageSize, space, playersList);
+        int y = TILE_SIZE * 8;
+        for (Player p : playersList) {
+            String score = String.valueOf(p.getScore());
+            int resourceId = p.getResourceId();
+            g2.setColor(new Color(playerColor[resourceId]));
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, TILE_SIZE * 2));
+            int width = (int) g2.getFontMetrics().getStringBounds(score, g2).getWidth();
+            int realX = x + (imageSize - width) / 2;
+            g2.drawString(score, realX, y);
+            x += imageSize + space;
+        }
+    }
+
+    private void drawResultsPlayer(int imageSize, int space, ArrayList<Player> playersList) {
+        int x = getStartXForPlayerList(imageSize, space, playersList);;
+        int y = TILE_SIZE * 2;
+        for (Player p : playersList) {
+            int resourceId = p.getResourceId();
+            String playerPath = "players/player" + resourceId + ".png";
+            BufferedImage playerImage;
+            try {
+                playerImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream(playerPath));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            g2.drawImage(playerImage, x, y, imageSize, imageSize, null);
+            x += space + imageSize;
+        }
+    }
+
+    private int getStartXForPlayerList(int imageSize, int space, ArrayList<Player> playerList) {
+        if (playerList.size() == 2) {
+            return SCREEN_WIDTH / 2 - imageSize / 2 - (space + imageSize) / 2;
+        } else if (playerList.size() == 3) {
+            return SCREEN_WIDTH / 2 - imageSize / 2 - space - imageSize;
+        }
+        return 0;
     }
 
     private void drawPause() {

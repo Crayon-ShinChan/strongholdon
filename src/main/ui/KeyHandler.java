@@ -51,7 +51,8 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_ENTER) {
             int cursorNum = drawer.getMenuCursorNum();
             if (cursorNum == 0) {
-                drawer.startMatch();
+//                gp.changeGameState(GameState.MATCH);
+                gp.restartMatch();
                 gp.changeGameState(GameState.MATCH);
             } else if (cursorNum == 1) {
                 gp.changeGameState(GameState.TITLE_SCREEN);
