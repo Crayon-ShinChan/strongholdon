@@ -52,7 +52,16 @@ public class Drawer {
             drawChoosingPlayer();
         } else if (gs == GameState.MATCH) {
             drawMatch();
+        } else if (gs == GameState.PAUSE) {
+            drawPause();
         }
+    }
+
+    private void drawPause() {
+        g2.setColor(new Color(0xEABC52));
+        g2.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        menu.draw(g2, TILE_SIZE * 7);
     }
 
     private void drawMatch() {
@@ -186,7 +195,7 @@ public class Drawer {
             cursorPlayerNum = 0;
             menu = new Menu(new String[] {"ADD PLAYER", "REMOVE PLAYER", "START", "BACK"});
         } else if (gs == GameState.PAUSE) {
-            menu = new Menu(new String[] {"SAVE GAME", "QUIT GAME"});
+            menu = new Menu(new String[] {"RESUME", "SAVE AND QUIT"});
         } else {
             menu = null;
         }
@@ -278,6 +287,7 @@ public class Drawer {
         if (playerStack.size() < 2) {
             return false;
         }
+        gp.initialStrongholdMap();
         StrongholdMap strongholdMap = gp.getStrongholdMap();
         for (int i = 0; i < playerStack.size(); i++) {
             Player p = new Player(i, playerStack.get(i), null, null, strongholdMap);

@@ -7,12 +7,13 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class KeyHandler implements KeyListener {
+    public static final int[][] KEY_MAP = {
+            {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D},
+            {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT},
+            {KeyEvent.VK_I, KeyEvent.VK_K, KeyEvent.VK_J, KeyEvent.VK_L}
+    };
     private GamePanel gp;
     private Drawer drawer;
-    private boolean upPressed;
-    private boolean downPressed;
-    private boolean leftPressed;
-    private boolean rightPressed;
 
     public KeyHandler(GamePanel gp, Drawer drawer) {
         this.gp = gp;
@@ -33,6 +34,26 @@ public class KeyHandler implements KeyListener {
             keyPressedHandlerChoosingPlayer(code);
         } else if (gs == GameState.MATCH) {
             keyPressedHandlerMatch(code);
+        } else if (gs == GameState.PAUSE) {
+            keyPressedHandlerPuse(code);
+        }
+    }
+
+    private void keyPressedHandlerPuse(int code) {
+        if (code == KeyEvent.VK_W) {
+            drawer.decreaseMenuCursorNum();
+        }
+        if (code == KeyEvent.VK_S) {
+            drawer.increaseMenuCursorNum();
+        }
+        if (code == KeyEvent.VK_ENTER) {
+            int cursorNum = drawer.getMenuCursorNum();
+            if (cursorNum == 0) {
+                gp.changeGameState(GameState.MATCH);
+            } else if (cursorNum == 1) {
+                gp.saveStrongholdMap();
+                gp.changeGameState(GameState.TITLE_SCREEN);
+            }
         }
     }
 
@@ -41,13 +62,8 @@ public class KeyHandler implements KeyListener {
             gp.changeGameState(GameState.PAUSE);
         }
         ArrayList<Player> playerList = gp.getStrongholdMap().getPlayers();
-        int[][] keyMap = {
-                {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D},
-                {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT},
-                {KeyEvent.VK_I, KeyEvent.VK_K, KeyEvent.VK_J, KeyEvent.VK_L}
-        };
         for (int i = 0; i < playerList.size(); i++) {
-            keyPressedHandlerMatchMovePlayer(code, playerList.get(i), keyMap[i]);
+            keyPressedHandlerMatchMovePlayer(code, playerList.get(i), KEY_MAP[i]);
         }
     }
 
@@ -111,7 +127,7 @@ public class KeyHandler implements KeyListener {
             if (cursorNum == 0) {
                 gp.changeGameState(GameState.CHOOSING_PLAYER);
             } else if (cursorNum == 1) {
-                // TODO: load game
+                gp.loadStrongholdMap();
                 gp.changeGameState(GameState.MATCH);
             } else if (cursorNum == 2) {
                 System.exit(0);
@@ -122,19 +138,5 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        int code = e.getKeyCode();
-
-//        if (code == KeyEvent.VK_W) {
-//            upPressed = false;
-//        }
-//        if (code == KeyEvent.VK_S) {
-//            downPressed = false;
-//        }
-//        if (code == KeyEvent.VK_A) {
-//            leftPressed = false;
-//        }
-//        if (code == KeyEvent.VK_D) {
-//            rightPressed = false;
-//        }
     }
 }

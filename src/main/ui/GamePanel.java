@@ -1,9 +1,13 @@
 package ui;
 
+import exception.PlayerDoesNotExist;
 import model.StrongholdMap;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -16,12 +20,15 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_HEIGHT;
     public static final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_HEIGHT;
     public static final int FPS = 60;
+    private static final String JSON_STORE = "./data/save/strongholdMap.json";
 
     private KeyHandler keyH;
     private Thread gameThread;
     private GameState gameState;
     private Drawer drawer;
     private StrongholdMap strongholdMap;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     public GamePanel() {
         // sets the size of JPanel
@@ -35,6 +42,8 @@ public class GamePanel extends JPanel implements Runnable {
         // keep listening?
         this.setFocusable(true);
         this.gameState = GameState.TITLE_SCREEN;
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     @Override
@@ -88,10 +97,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     // TODO: make it not changeable (collection), like lab 8
     public StrongholdMap getStrongholdMap() {
-        if (strongholdMap == null) {
-            strongholdMap = new StrongholdMap();
-        }
         return strongholdMap;
+    }
+
+    public void initialStrongholdMap() {
+        strongholdMap = new StrongholdMap();
     }
 
     public void changeGameState(GameState newGameState) {
@@ -104,6 +114,31 @@ public class GamePanel extends JPanel implements Runnable {
     private void update() {
         if (gameState == GameState.MATCH) {
             // update the player status and something
+        }
+    }
+
+    // EFFECTS: save the current match to a json file
+    public void saveStrongholdMap() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(strongholdMap);
+            jsonWriter.close();
+            System.out.println("Saved the current match" + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: resume the match
+    public void loadStrongholdMap() {
+        try {
+            strongholdMap = jsonReader.read();
+            System.out.println("Resuming the last match");
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        } catch (PlayerDoesNotExist e) {
+            System.out.println("A stronghold has a player does not exist");
         }
     }
 }
