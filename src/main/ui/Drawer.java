@@ -54,7 +54,21 @@ public class Drawer {
             drawMatch();
         } else if (gs == GameState.PAUSE) {
             drawPause();
+        } else if (gs == GameState.MATCH_END) {
+            drawMatchEnd();
         }
+    }
+
+    private void drawMatchEnd() {
+        g2.setColor(new Color(0xEABC52));
+        g2.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+        menu.draw(g2, TILE_SIZE * 11);
+        drawPlayerResults();
+    }
+
+    private void drawPlayerResults() {
+
     }
 
     private void drawPause() {
@@ -203,7 +217,9 @@ public class Drawer {
             cursorPlayerNum = 0;
             menu = new Menu(new String[] {"ADD PLAYER", "REMOVE PLAYER", "START", "BACK"});
         } else if (gs == GameState.PAUSE) {
-            menu = new Menu(new String[] {"RESUME", "SAVE AND QUIT"});
+            menu = new Menu(new String[] {"RESUME", "SAVE AND QUIT MATCH"});
+        } else if (gs == GameState.MATCH_END) {
+            menu = new Menu(new String[] {"PLAY AGAIN", "RETURN TO TITLE SCREEN"});
         } else {
             menu = null;
         }

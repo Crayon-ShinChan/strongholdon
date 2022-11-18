@@ -35,11 +35,31 @@ public class KeyHandler implements KeyListener {
         } else if (gs == GameState.MATCH) {
             keyPressedHandlerMatch(code);
         } else if (gs == GameState.PAUSE) {
-            keyPressedHandlerPuse(code);
+            keyPressedHandlerPause(code);
+        } else if (gs == GameState.MATCH_END) {
+            keyPressedHandlerMatchEnd(code);
         }
     }
 
-    private void keyPressedHandlerPuse(int code) {
+    private void keyPressedHandlerMatchEnd(int code) {
+        if (code == KeyEvent.VK_W) {
+            drawer.decreaseMenuCursorNum();
+        }
+        if (code == KeyEvent.VK_S) {
+            drawer.increaseMenuCursorNum();
+        }
+        if (code == KeyEvent.VK_ENTER) {
+            int cursorNum = drawer.getMenuCursorNum();
+            if (cursorNum == 0) {
+                drawer.startMatch();
+                gp.changeGameState(GameState.MATCH);
+            } else if (cursorNum == 1) {
+                gp.changeGameState(GameState.TITLE_SCREEN);
+            }
+        }
+    }
+
+    private void keyPressedHandlerPause(int code) {
         if (code == KeyEvent.VK_W) {
             drawer.decreaseMenuCursorNum();
         }
