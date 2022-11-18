@@ -60,10 +60,11 @@ public class JsonReader {
         for (Object json : jsonArray) {
             JSONObject nextPlayer = (JSONObject) json;
             int playerId = nextPlayer.getInt("playerId");
+            int resourceId = nextPlayer.getInt("resourceId");
             int posX = nextPlayer.getInt("posX");
             int posY = nextPlayer.getInt("posY");
             int score = nextPlayer.getInt("score");
-            Player p = new Player(playerId, posX, posY, mp);
+            Player p = new Player(playerId, resourceId, posX, posY, mp);
             p.setScore(score);
             mp.addPlayerWithData(p);
         }

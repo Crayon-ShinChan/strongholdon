@@ -9,12 +9,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static ui.GamePanel.MAX_SCREEN_HEIGHT;
-import static ui.GamePanel.MAX_SCREEN_WIDTH;
+import static ui.GamePanel.*;
 
 // Represent the game map containing data of strongholds
 public class StrongholdMap implements Writable {
-    public static final int DEFAULT_HEIGHT = MAX_SCREEN_HEIGHT; // should be larger than 4
+    public static final int DEFAULT_HEIGHT = MAX_SCREEN_HEIGHT - 2; // should be larger than 4
     public static final int DEFAULT_WIDTH = MAX_SCREEN_WIDTH; // should be larger than 4
     public static final int MAX_PLAYER_NUM = 3;
     public static final int MIN_PLAYER_NUM = 2;
@@ -28,7 +27,7 @@ public class StrongholdMap implements Writable {
     public StrongholdMap() {
         this.height = DEFAULT_HEIGHT;
         this.width = DEFAULT_WIDTH;
-        this.strongholds = new Stronghold[this.height][this.width];
+        this.strongholds = new Stronghold[DEFAULT_HEIGHT][DEFAULT_WIDTH];
         this.players = new ArrayList<>();
     }
 
@@ -89,10 +88,10 @@ public class StrongholdMap implements Writable {
     // EFFECTS: add a player to player list, playerId is a continuously increasing positive number
     // TODO: make sure the max constraint and may state requires here
     public void addPlayer() {
-        players.add(new Player(players.size() + 1, null, null, this));
+        players.add(new Player(players.size() + 1, players.size() + 1, null, null, this));
     }
 
-    // REQUIRES: p
+    // REQUIRES: p is not already in this class
     // MODIFIES: this
     // EFFECTS: add a player to player list without position values
     public void addPlayerWithData(Player p) {

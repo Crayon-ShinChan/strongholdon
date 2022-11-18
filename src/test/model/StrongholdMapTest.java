@@ -17,8 +17,8 @@ class StrongholdMapTest {
     public void beforeRun() {
         smallMap = new StrongholdMap(SMALL_HEIGHT, SMALL_WIDTH);
         strongholdMap = new StrongholdMap();
-        player1 = new Player(1, 0, 0, null);
-        player2 = new Player(2, 0, 1, null);
+        player1 = new Player(1, 1, 0, 0, null);
+        player2 = new Player(2, 2, 0, 1, null);
         sh1 = new Stronghold(player1, 0, 0);
         sh2 = new Stronghold(player2, 0, 1);
     }

@@ -30,14 +30,14 @@ public class PlayerTest {
         strongholdMap1 = new StrongholdMap(SMALL_HEIGHT, SMALL_WIDTH);
         strongholdMap2 = new StrongholdMap(SMALL_HEIGHT, SMALL_WIDTH);
         playerList = new ArrayList<>();
-        playerList.add(new Player(1, 3, 3, null));
-        playerList.add(new Player(2, 0, 0, null));
-        playerList.add(new Player(3, SMALL_HEIGHT - 1, SMALL_WIDTH - 1, null));
+        playerList.add(new Player(1, 1, 3, 3, null));
+        playerList.add(new Player(2, 2, 0, 0, null));
+        playerList.add(new Player(3, 3, SMALL_HEIGHT - 1, SMALL_WIDTH - 1, null));
         // TODO: ask: p4 is just for the test of move when player want to move to another player,
         // TODO: should p4 be tested in constructor?
         //  NOT necessary
-        playerList.add(new Player(4, 0, 1, null));
-        playerList.add(new Player(1, 3, 3, null));
+        playerList.add(new Player(4, 4, 0, 1, null));
+        playerList.add(new Player(1, 1, 3, 3, null));
         constructMap1();
         constructMap2();
     }

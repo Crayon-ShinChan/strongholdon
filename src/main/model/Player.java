@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class Player implements Writable {
     private final int playerId;
     // TODO: change the posX default value to -1 as null
+    // TODO: update specification for resourceId
+    private final int resourceId;
     private Integer posX; // Integer can be null
     private Integer posY;
     private int score;
@@ -21,8 +23,9 @@ public class Player implements Writable {
     // EFFECTS: playerId is set to a positive integer
     //          posX and posY is set within the map
     //          score is set to be 0
-    public Player(int playerId, Integer posX, Integer posY, StrongholdMap strongholdMap) {
+    public Player(int playerId, int resourceId, Integer posX, Integer posY, StrongholdMap strongholdMap) {
         this.playerId = playerId;
+        this.resourceId = resourceId;
         this.posX = posX;
         this.posY = posY;
         this.score = 0;
@@ -68,6 +71,10 @@ public class Player implements Writable {
         return score;
     }
 
+    public int getResourceId() {
+        return resourceId;
+    }
+
     // EFFECTS: get strongholdMap of the player
     public StrongholdMap getStrongholdMap() {
         return strongholdMap;
@@ -101,6 +108,7 @@ public class Player implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("playerId", playerId);
+        json.put("resourceId", resourceId);
         json.put("posX", posX);
         json.put("posY", posY);
         json.put("score", score);

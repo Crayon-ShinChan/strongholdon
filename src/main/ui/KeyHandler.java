@@ -50,7 +50,6 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_S) {
             drawer.increaseMenuCursorNum();
         }
-
         if (code == KeyEvent.VK_A) {
             drawer.decreaseCursorPlayerNum();
         }
@@ -58,16 +57,22 @@ public class KeyHandler implements KeyListener {
             drawer.increaseCursorPlayerNum();
         }
         if (code == KeyEvent.VK_ENTER) {
-            int cursorNum = drawer.getMenuCursorNum();
-            if (cursorNum == 0) {
-                drawer.addPlayer();
-            } else if (cursorNum == 1) {
-                drawer.removePlayer();
-            } else if (cursorNum == 2) {
+            keyPressedHandlerChoosingPlayerEnterHandler();
+        }
+    }
+
+    private void keyPressedHandlerChoosingPlayerEnterHandler() {
+        int cursorNum = drawer.getMenuCursorNum();
+        if (cursorNum == 0) {
+            drawer.addPlayer();
+        } else if (cursorNum == 1) {
+            drawer.removePlayer();
+        } else if (cursorNum == 2) {
+            if (drawer.startMatch()) {
                 gp.changeGameState(GameState.MATCH);
-            } else if (cursorNum == 3) {
-                gp.changeGameState(GameState.TITLE_SCREEN);
             }
+        } else if (cursorNum == 3) {
+            gp.changeGameState(GameState.TITLE_SCREEN);
         }
     }
 

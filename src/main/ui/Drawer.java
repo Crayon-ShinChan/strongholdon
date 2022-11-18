@@ -1,5 +1,7 @@
 package ui;
 
+import model.Player;
+import model.Stronghold;
 import model.StrongholdMap;
 
 import javax.imageio.ImageIO;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static model.StrongholdMap.MAX_PLAYER_NUM;
+import static model.StrongholdMap.*;
 import static ui.GamePanel.*;
 
 public class Drawer {
@@ -42,12 +44,82 @@ public class Drawer {
         g2.setFont(maruMonicaFont);
 //        g2.setColor(Color.white);
 
-        if (gp.getGameState() == GameState.TITLE_SCREEN) {
+        GameState gs = gp.getGameState();
+
+        if (gs == GameState.TITLE_SCREEN) {
             drawTitleScreen();
-        } else if (gp.getGameState() == GameState.CHOOSING_PLAYER) {
+        } else if (gs == GameState.CHOOSING_PLAYER) {
             drawChoosingPlayer();
+        } else if (gs == GameState.MATCH) {
+            drawMatch();
         }
     }
+
+    private void drawMatch() {
+//        g2.setColor(Color.yellow);
+//        g2.fillRect(0, 0, SCREEN_WIDTH, DEFAULT_HEIGHT * TILE_SIZE);
+        drawLandInMatch();
+
+        drawStrongholdInMatch();
+        drawPlayerInMatch();
+    }
+
+    private void drawLandInMatch() {
+        BufferedImage landImage;
+        try {
+            landImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("lands/emptyLand.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        for (int i = 0; i < DEFAULT_HEIGHT; i++) {
+            for (int j = 0; j < DEFAULT_WIDTH; j++) {
+                g2.drawImage(landImage, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+            }
+        }
+    }
+
+    // TODO: return unchangeable array
+    private void drawStrongholdInMatch() {
+        Stronghold[][] strongholds = gp.getStrongholdMap().getStrongholds();
+        for (int i = 0; i < DEFAULT_HEIGHT; i++) {
+            for (int j = 0; j < DEFAULT_WIDTH; j++) {
+                if (strongholds[i][j] == null) {
+                    continue;
+                }
+                BufferedImage image = getStrongholdImage(strongholds[i][j]);
+                g2.drawImage(image, j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE, null);
+            }
+        }
+    }
+
+    private BufferedImage getStrongholdImage(Stronghold stronghold) {
+        int resourceId = stronghold.getOwner().getResourceId();
+        String imagePath = "players/hold" + resourceId + ".png";
+        BufferedImage image;
+        try {
+            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream(imagePath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return image;
+    }
+
+    private void drawPlayerInMatch() {
+        ArrayList<Player> playerList = gp.getStrongholdMap().getPlayers();
+        for (Player p : playerList) {
+            int x = p.getPosY() * TILE_SIZE;
+            int y = p.getPosX() * TILE_SIZE;
+            String playerPath = "players/player" + p.getResourceId() + ".png";
+            BufferedImage playerImage;
+            try {
+                playerImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream(playerPath));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            g2.drawImage(playerImage, x, y, TILE_SIZE, TILE_SIZE, null);
+        }
+    }
+
 
     private void drawChoosingPlayer() {
         g2.setColor(new Color(0xEABC52));
@@ -198,5 +270,18 @@ public class Drawer {
             }
         }
         cursorPlayerNum = nextCursorPlayerNum;
+    }
+
+    public boolean startMatch() {
+        if (playerStack.size() < 2) {
+            return false;
+        }
+        StrongholdMap strongholdMap = gp.getStrongholdMap();
+        for (int i = 0; i < playerStack.size(); i++) {
+            Player p = new Player(i, playerStack.get(i), null, null, strongholdMap);
+            strongholdMap.addPlayerWithData(p);
+        }
+        strongholdMap.startMatch();
+        return true;
     }
 }

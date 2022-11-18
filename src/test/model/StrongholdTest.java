@@ -13,8 +13,8 @@ public class StrongholdTest {
     @BeforeEach
     public void beforeRun() {
         Player p1, p2;
-        p1 = new Player(1, 0, 0, null);
-        p2 = new Player(2,  StrongholdMap.DEFAULT_HEIGHT - 1, StrongholdMap.DEFAULT_WIDTH - 1, null);
+        p1 = new Player(1, 1, 0, 0, null);
+        p2 = new Player(2, 2, StrongholdMap.DEFAULT_HEIGHT - 1, StrongholdMap.DEFAULT_WIDTH - 1, null);
         sh1 = new Stronghold(p1, 0, 0);
         sh2 = new Stronghold(p2, StrongholdMap.DEFAULT_HEIGHT - 1, StrongholdMap.DEFAULT_WIDTH - 1);
         sh3 = new Stronghold(

@@ -1,5 +1,7 @@
 package ui;
 
+import model.StrongholdMap;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -19,6 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
     private GameState gameState;
     private Drawer drawer;
+    private StrongholdMap strongholdMap;
 
     public GamePanel() {
         // sets the size of JPanel
@@ -81,6 +84,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     public GameState getGameState() {
         return gameState;
+    }
+
+    // TODO: make it not changeable (collection), like lab 8
+    public StrongholdMap getStrongholdMap() {
+        if (strongholdMap == null) {
+            strongholdMap = new StrongholdMap();
+        }
+        return strongholdMap;
     }
 
     public void changeGameState(GameState newGameState) {
