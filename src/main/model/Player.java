@@ -107,26 +107,6 @@ public class Player implements Writable {
         return json;
     }
 
-    // TODO: apply this
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Player player = (Player) o;
-
-        return playerId == player.playerId;
-    }
-
-    @Override
-    public int hashCode() {
-        return playerId;
-    }
-
     // REQUIRES: direction is one of ["w", "a", "s", "d"] from the keyboard
     // MODIFIES: this
     // EFFECTS: move the player to another stronghold with speed of 1

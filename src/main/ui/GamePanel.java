@@ -17,6 +17,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     private KeyHandler keyH;
     private Thread gameThread;
+    private GameState gameState;
+    private Drawer drawer;
 
     public GamePanel() {
         // sets the size of JPanel
@@ -24,9 +26,13 @@ public class GamePanel extends JPanel implements Runnable {
         this.setBackground(Color.black);
         // Enabling this can improve game's rendering performance
         this.setDoubleBuffered(true);
-        this.addKeyListener(keyH = new KeyHandler());
+        this.drawer = new Drawer(this);
+        this.keyH = new KeyHandler(this, this.drawer);
+        this.addKeyListener(keyH);
         // keep listening?
         this.setFocusable(true);
+        this.gameState = GameState.TITLE_SCREEN;
+        this.drawer = new Drawer(this);
     }
 
     @Override
@@ -70,21 +76,24 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        Font maruMonica;
-        InputStream is = getClass().getClassLoader().getResourceAsStream("fonts/x12y16pxMaruMonica.ttf");
-        try {
-            maruMonica = Font.createFont(Font.TRUETYPE_FONT, is);
-        } catch (IOException | FontFormatException e) {
-            throw new RuntimeException(e);
-        }
-        g2.setFont(maruMonica);
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, TILE_SIZE));
-        g2.setColor(Color.white);
-        g2.drawString("Strongholdon", TILE_SIZE * 2, TILE_SIZE * 2);
+        drawer.draw(g2);
         g2.dispose();
     }
 
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void changeGameState(GameState newGameState) {
+        if (newGameState != gameState) {
+            gameState = newGameState;
+            drawer.initialMenu();
+        }
+    }
+
     private void update() {
-        // stub
+        if (gameState == GameState.MATCH) {
+            // update the player status and something
+        }
     }
 }
