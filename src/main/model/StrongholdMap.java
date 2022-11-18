@@ -16,7 +16,7 @@ import static ui.GamePanel.MAX_SCREEN_WIDTH;
 public class StrongholdMap implements Writable {
     public static final int DEFAULT_HEIGHT = MAX_SCREEN_HEIGHT; // should be larger than 4
     public static final int DEFAULT_WIDTH = MAX_SCREEN_WIDTH; // should be larger than 4
-    public static final int MAX_PLAYER_NUM = 4;
+    public static final int MAX_PLAYER_NUM = 3;
     public static final int MIN_PLAYER_NUM = 2;
 
     private final int height;

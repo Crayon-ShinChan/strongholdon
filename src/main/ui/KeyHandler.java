@@ -26,6 +26,8 @@ public class KeyHandler implements KeyListener {
         GameState gs = gp.getGameState();
         if (gs == GameState.TITLE_SCREEN) {
             keyPressedHandlerTitleScreen(code);
+        } else if (gs == GameState.CHOOSING_PLAYER) {
+            keyPressedHandlerChoosingPlayer(code);
         }
 //        if (code == KeyEvent.VK_W) {
 //            upPressed = true;
@@ -39,6 +41,34 @@ public class KeyHandler implements KeyListener {
 //        if (code == KeyEvent.VK_D) {
 //            rightPressed = true;
 //        }
+    }
+
+    private void keyPressedHandlerChoosingPlayer(int code) {
+        if (code == KeyEvent.VK_W) {
+            drawer.decreaseMenuCursorNum();
+        }
+        if (code == KeyEvent.VK_S) {
+            drawer.increaseMenuCursorNum();
+        }
+
+        if (code == KeyEvent.VK_A) {
+            drawer.decreaseCursorPlayerNum();
+        }
+        if (code == KeyEvent.VK_D) {
+            drawer.increaseCursorPlayerNum();
+        }
+        if (code == KeyEvent.VK_ENTER) {
+            int cursorNum = drawer.getMenuCursorNum();
+            if (cursorNum == 0) {
+                drawer.addPlayer();
+            } else if (cursorNum == 1) {
+                drawer.removePlayer();
+            } else if (cursorNum == 2) {
+                gp.changeGameState(GameState.MATCH);
+            } else if (cursorNum == 3) {
+                gp.changeGameState(GameState.TITLE_SCREEN);
+            }
+        }
     }
 
     private void keyPressedHandlerTitleScreen(int code) {
