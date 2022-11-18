@@ -73,6 +73,14 @@ public class Drawer {
 
         drawStrongholdInMatch();
         drawPlayerInMatch();
+        drawTimer();
+    }
+
+    private void drawTimer() {
+        int timer = GAME_SECOND - gp.getStrongholdMap().getCurrentTimeUnit() / FPS;
+        g2.setColor(Color.black);
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, TILE_SIZE * 2));
+        g2.drawString(String.valueOf(timer), TILE_SIZE * 6 / 10, SCREEN_WIDTH - TILE_SIZE * 8 / 10);
     }
 
     private void drawLandInMatch() {

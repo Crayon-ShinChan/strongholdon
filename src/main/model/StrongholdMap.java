@@ -17,11 +17,14 @@ public class StrongholdMap implements Writable {
     public static final int DEFAULT_WIDTH = MAX_SCREEN_WIDTH; // should be larger than 4
     public static final int MAX_PLAYER_NUM = 3;
     public static final int MIN_PLAYER_NUM = 2;
+    public static final int GAME_SECOND = 60;
 
     private final int height;
     private final int width;
     private Stronghold[][] strongholds;
     private ArrayList<Player> players;
+    private int currentTimeUnit;
+    private int roundInterval;
 
     // EFFECTS: construct a map with no stronghold, player and with the fixed default width and height
     public StrongholdMap() {
@@ -29,6 +32,8 @@ public class StrongholdMap implements Writable {
         this.width = DEFAULT_WIDTH;
         this.strongholds = new Stronghold[DEFAULT_HEIGHT][DEFAULT_WIDTH];
         this.players = new ArrayList<>();
+        this.currentTimeUnit = 0;
+        this.roundInterval = FPS / 2;
     }
 
     // REQUIRES: width >= 4 AND height >= 4;
@@ -38,6 +43,15 @@ public class StrongholdMap implements Writable {
         this.width = width;
         this.strongholds = new Stronghold[this.height][this.width];
         this.players = new ArrayList<>();
+    }
+
+    public StrongholdMap(int height, int width, int currentTimeUnit, int roundInterval) {
+        this.height = height;
+        this.width = width;
+        this.strongholds = new Stronghold[this.height][this.width];
+        this.players = new ArrayList<>();
+        this.currentTimeUnit = currentTimeUnit;
+        this.roundInterval = roundInterval;
     }
 
     // REQUIRES: players.size() >= 2 AND players.size() <= 4
@@ -142,6 +156,8 @@ public class StrongholdMap implements Writable {
         JSONObject json = new JSONObject();
         json.put("height", height);
         json.put("width", width);
+        json.put("currentTimeUnit", currentTimeUnit);
+        json.put("roundInterval", roundInterval);
         json.put("strongholds", strongholdsToJson());
         json.put("players", playersToJson());
         return json;
@@ -232,6 +248,22 @@ public class StrongholdMap implements Writable {
                     {height / 4 * 3, width / 4 * 3}
             };
         }
+    }
+
+    public int getRoundStartTimeUnit() {
+        return currentTimeUnit / roundInterval * roundInterval;
+    }
+
+    public void increaseCurrentTimeUnit() {
+        this.currentTimeUnit++;
+    }
+
+    public int getCurrentTimeUnit() {
+        return this.currentTimeUnit;
+    }
+
+    public boolean getIsTimeUp() {
+        return GAME_SECOND * FPS <= currentTimeUnit;
     }
 
     // TODO: delete players, only available before any Match, add fields to indicate match start

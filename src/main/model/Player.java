@@ -15,6 +15,7 @@ public class Player implements Writable {
     private Integer posY;
     private int score;
     private StrongholdMap strongholdMap;
+    private Integer lastMoveTimeUnit;
     // private ArrayList<Stronghold> newStronghold;
     // private String color;
 
@@ -32,6 +33,28 @@ public class Player implements Writable {
         this.strongholdMap = strongholdMap;
     }
 
+    // REQUIRES: playerId > 0 AND posX >= 0 AND posX < StrongholdMap.width
+    //           AND posY >= 0 AND posY < StrongholdMap.height
+    // EFFECTS: playerId is set to a positive integer
+    //          posX and posY is set within the map
+    //          score is set to be 0
+    public Player(
+            int playerId,
+            int resourceId,
+            Integer posX,
+            Integer posY,
+            StrongholdMap strongholdMap,
+            Integer lastMoveTimeUnit
+    ) {
+        this.playerId = playerId;
+        this.resourceId = resourceId;
+        this.posX = posX;
+        this.posY = posY;
+        this.score = 0;
+        this.strongholdMap = strongholdMap;
+        this.lastMoveTimeUnit = lastMoveTimeUnit;
+    }
+
     // TODO: change the direction inputs for multiple players playing simultaneously
     // REQUIRES: direction is one of ["w", "a", "s", "d"] from the keyboard
     // MODIFIES: this
@@ -42,6 +65,11 @@ public class Player implements Writable {
     //            - return false
     //          otherwise, return true
     public boolean move(String direction) {
+        long roundStartTimeUnit = strongholdMap.getRoundStartTimeUnit();
+        if (lastMoveTimeUnit != null && lastMoveTimeUnit > roundStartTimeUnit) {
+            return false;
+        }
+        lastMoveTimeUnit = strongholdMap.getCurrentTimeUnit();
         direction = direction.toLowerCase();
         if (!movePlayer(direction)) {
             return false;
@@ -104,6 +132,10 @@ public class Player implements Writable {
         this.strongholdMap = strongholdMap;
     }
 
+    public void setLastMoveTimeUnit(int lastMoveTimeUnit) {
+        this.lastMoveTimeUnit = lastMoveTimeUnit;
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -112,6 +144,7 @@ public class Player implements Writable {
         json.put("posX", posX);
         json.put("posY", posY);
         json.put("score", score);
+        json.put("lastMoveTimeUnit", lastMoveTimeUnit);
         return json;
     }
 

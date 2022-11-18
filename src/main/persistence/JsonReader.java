@@ -48,7 +48,9 @@ public class JsonReader {
     private StrongholdMap parseStrongholdMap(JSONObject jsonObject) throws PlayerDoesNotExist {
         int height = jsonObject.getInt("height");
         int width = jsonObject.getInt("width");
-        StrongholdMap mp = new StrongholdMap(height, width);
+        int currentTimeUnit = jsonObject.getInt("currentTimeUnit");
+        int roundInterval = jsonObject.getInt("roundInterval");
+        StrongholdMap mp = new StrongholdMap(height, width, currentTimeUnit, roundInterval);
         addPlayers(mp, jsonObject);
         addStrongholds(mp, jsonObject);
         return mp;
@@ -64,7 +66,13 @@ public class JsonReader {
             int posX = nextPlayer.getInt("posX");
             int posY = nextPlayer.getInt("posY");
             int score = nextPlayer.getInt("score");
-            Player p = new Player(playerId, resourceId, posX, posY, mp);
+            Integer lastMoveTimeUnit;
+            try {
+                lastMoveTimeUnit = nextPlayer.getInt("lastMoveTimeUnit");
+            } catch (Exception e) {
+                lastMoveTimeUnit = null;
+            }
+            Player p = new Player(playerId, resourceId, posX, posY, mp, lastMoveTimeUnit);
             p.setScore(score);
             mp.addPlayerWithData(p);
         }

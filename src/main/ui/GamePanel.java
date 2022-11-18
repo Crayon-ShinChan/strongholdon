@@ -65,7 +65,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (delta >= drawInterval) {
                 // 1 UPDATE: update information such as character positions
-                update();
+                update(currentTime);
                 // 2 DRAW: draw the screen
                 repaint();
                 delta -= drawInterval;
@@ -111,9 +111,13 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-    private void update() {
+    private void update(long currentTime) {
         if (gameState == GameState.MATCH) {
-            // update the player status and something
+            if (strongholdMap.getIsTimeUp()) {
+                changeGameState(GameState.MATCH_END);
+            } else {
+                strongholdMap.increaseCurrentTimeUnit();
+            }
         }
     }
 
