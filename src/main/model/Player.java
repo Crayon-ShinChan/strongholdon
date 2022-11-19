@@ -5,6 +5,8 @@ import persistence.Writable;
 
 import java.util.ArrayList;
 
+import static ui.GamePanel.FPS;
+
 // Represents a player in the game
 public class Player implements Writable {
     private final int playerId;
@@ -77,11 +79,22 @@ public class Player implements Writable {
     //          otherwise, return true
     public boolean move(String direction) {
         long roundStartTimeUnit = strongholdMap.getRoundStartTimeUnit();
-        if (lastMoveTimeUnit != null && lastMoveTimeUnit > roundStartTimeUnit) {
+        if (lastMoveTimeUnit != null && lastMoveTimeUnit >= roundStartTimeUnit) {
             return false;
         }
         lastMoveTimeUnit = strongholdMap.getCurrentTimeUnit();
         direction = direction.toLowerCase();
+
+        if (!moveAndOccupy(direction)) {
+            return false;
+        }
+        if (lastMoveTimeUnit - roundStartTimeUnit < FPS / 2 / 6) {
+            return moveAndOccupy(direction);
+        }
+        return true;
+    }
+
+    private boolean moveAndOccupy(String direction) {
         if (!movePlayer(direction)) {
             return false;
         }
