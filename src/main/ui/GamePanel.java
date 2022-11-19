@@ -31,6 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
     private StrongholdMap strongholdMap;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private Sound sound;
 
     public GamePanel() {
         // sets the size of JPanel
@@ -44,8 +45,9 @@ public class GamePanel extends JPanel implements Runnable {
         // keep listening?
         this.setFocusable(true);
         this.gameState = GameState.TITLE_SCREEN;
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
+        this.jsonWriter = new JsonWriter(JSON_STORE);
+        this.jsonReader = new JsonReader(JSON_STORE);
+        this.sound = new Sound();
     }
 
     @Override
@@ -84,6 +86,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
+        playMusic(0);
     }
 
     public void paintComponent(Graphics g) {
@@ -108,6 +111,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void changeGameState(GameState newGameState) {
         if (newGameState != gameState) {
+            if (newGameState == GameState.TITLE_SCREEN) {
+                stopMusic();
+                playMusic(0);
+            } else if (newGameState == GameState.PAUSE) {
+                pauseMusic();
+            } else if (newGameState == GameState.MATCH && gameState == GameState.PAUSE) {
+                playMusic(1);
+            }
             gameState = newGameState;
             drawer.initialMenu();
         }
@@ -115,6 +126,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     private void update(long currentTime) {
         if (gameState == GameState.MATCH) {
+            int currentTimeUnit = strongholdMap.getCurrentTimeUnit();
+            if (currentTimeUnit % (FPS * 10) == 0) {
+                stopMusic();
+                playMusic(1);
+            }
             if (strongholdMap.getIsTimeUp()) {
                 changeGameState(GameState.MATCH_END);
             } else {
@@ -156,5 +172,19 @@ public class GamePanel extends JPanel implements Runnable {
             strongholdMap.addPlayerWithData(newPlayer);
         }
         strongholdMap.startMatch();
+    }
+
+    private void playMusic(int i) {
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    private void stopMusic() {
+        sound.stop();
+    }
+
+    private void pauseMusic() {
+        sound.pause();
     }
 }
