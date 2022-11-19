@@ -27,11 +27,9 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     public void testReaderEmptyStrongholdMap() {
-        JsonReader reader = new JsonReader("./data/testReaderEmptyMatch.json");
+        JsonReader reader = new JsonReader("./data/test/testReaderEmptyMatch.json");
         try {
             StrongholdMap mp = reader.read();
-            assertEquals(9, mp.getHeight());
-            assertEquals(9, mp.getWidth());
             int[][] existStrongholds = new int[0][3];
             checkStrongholds(existStrongholds, mp.getStrongholds());
             assertEquals(0, mp.getPlayers().size());
@@ -44,19 +42,19 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     public void testReaderGeneralStrongholdMap() {
-        JsonReader reader = new JsonReader("./data/testReaderGeneralMatch.json");
+        JsonReader reader = new JsonReader("./data/test/testReaderGeneralMatch.json");
         try {
             StrongholdMap mp = reader.read();
-            assertEquals(9, mp.getHeight());
-            assertEquals(9, mp.getWidth());
+            assertEquals(13, mp.getHeight());
+            assertEquals(16, mp.getWidth());
             int[][] existStrongholds = {
-                    {3, 4, 1},
-                    {5, 6, 2},
-                    {5, 7, 2},
+                    {5, 4, 1},
+                    {6, 4, 1},
+                    {6, 12, 0}
             };
             int[][] existPlayers = {
-                    {1, 3, 5, 1},
-                    {2, 5, 7, 2},
+                    {0, 6, 12, 1, 0, -1},
+                    {1, 5, 4, 2, 2, 73}
             };
             checkStrongholds(existStrongholds, mp.getStrongholds());
             checkPlayers(existPlayers, mp.getPlayers(), mp);
@@ -69,7 +67,7 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     public void testReaderPlayerDoesNotExist() {
-        JsonReader reader = new JsonReader("./data/testReaderPlayerDoesNotExist.json");
+        JsonReader reader = new JsonReader("./data/test/testReaderPlayerDoesNotExist.json");
         try {
             StrongholdMap mp = reader.read();
             int[][] existStrongholds = {

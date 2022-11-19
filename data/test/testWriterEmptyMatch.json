@@ -3,6 +3,6 @@
     "players": [],
     "width": 9,
     "currentTimeUnit": 0,
-    "roundInterval": 0,
+    "roundInterval": 30,
     "height": 9
 }

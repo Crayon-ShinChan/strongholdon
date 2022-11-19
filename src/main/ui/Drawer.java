@@ -11,8 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
+import static java.lang.Math.*;
 import static model.StrongholdMap.*;
 import static ui.GamePanel.*;
 
@@ -135,6 +134,66 @@ public class Drawer {
         drawStrongholdInMatch();
         drawPlayerInMatch();
         drawTimer();
+        drawHeart();
+        drawMiddleLine();
+    }
+
+    private void drawMiddleLine() {
+        int leftBound = TILE_SIZE * 3;
+        int center = leftBound + (SCREEN_WIDTH - leftBound) / 2;
+        int y = SCREEN_HEIGHT - TILE_SIZE * 3 + TILE_SIZE / 2;
+        g2.setColor(new Color(0xEABC52));
+        g2.drawRect(center, y, 1, TILE_SIZE * 2);
+    }
+
+    private void drawHeart() {
+        int leftBound = TILE_SIZE * 3;
+        int rightBound = SCREEN_HEIGHT;
+        int center = leftBound + (SCREEN_WIDTH - leftBound) / 2 - (gp.getStrongholdMap().getCurrentTimeUnit() % FPS) * 2;
+        int y = SCREEN_HEIGHT - TILE_SIZE * 3 + TILE_SIZE / 2;
+        int x = center;
+        int imageWidth = 60 * SCALE;
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("time/heart.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        while (x + imageWidth <= rightBound) {
+            g2.drawImage(image, x, y, imageWidth, TILE_SIZE * 2, null);
+            x += imageWidth;
+        }
+        drawPartialImage(x, rightBound, y, image, imageWidth, TILE_SIZE * 2, false);
+        x = center - imageWidth;
+        while (x >= leftBound) {
+            g2.drawImage(image, x, y, imageWidth, TILE_SIZE * 2, null);
+            x -= imageWidth;
+        }
+        drawPartialImage(leftBound, x + imageWidth, y, image, imageWidth, TILE_SIZE * 2, true);
+    }
+
+    private void drawPartialImage(
+            int leftX,
+            int rightX,
+            int topY,
+            BufferedImage image,
+            int width,
+            int height,
+            boolean direction
+    ) {
+        if (rightX == leftX) {
+            return;
+        }
+        int leftInsideX;
+        if (!direction) {
+            leftInsideX = 0;
+            BufferedImage partialImage = image.getSubimage(leftInsideX, 0, (rightX - leftX) / SCALE, height / SCALE);
+            g2.drawImage(partialImage, leftX, topY, rightX - leftX, height, null);
+        } else {
+            leftInsideX = (width - (rightX - leftX)) / SCALE;
+            BufferedImage partialImage = image.getSubimage(leftInsideX, 0, (rightX - leftX) / SCALE, height / SCALE);
+            g2.drawImage(partialImage, leftX, topY, rightX - leftX, height, null);
+        }
     }
 
     private void drawTimer() {

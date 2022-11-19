@@ -33,7 +33,6 @@ public class Sound {
 
     public void play() {
         if (status == 2) {
-            System.out.println(clipTime);
             clip.setMicrosecondPosition(clipTime);
         }
         clip.start();
@@ -52,11 +51,10 @@ public class Sound {
     public void pause() {
         status = 2;
         clipTime = clip.getMicrosecondPosition();
-        System.out.println("Get clipTime from pause: " + clipTime);
         clip.stop();
     }
 
-    public void setClipTime(int clipTime) {
+    public void setClipTime(long clipTime) {
         this.clipTime = clipTime;
     }
 

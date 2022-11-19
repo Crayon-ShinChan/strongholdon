@@ -1,0 +1,25 @@
+{
+  "strongholds": [
+    {
+      "posX": 5,
+      "posY": 4,
+      "playerId": 1
+    },
+    {
+      "posX": 6,
+      "posY": 4,
+      "playerId": 1
+    },
+    {
+      "posX": 6,
+      "posY": 12,
+      "playerId": 0
+    }
+  ],
+  "players": [
+  ],
+  "width": 16,
+  "currentTimeUnit": 126,
+  "roundInterval": 30,
+  "height": 13
+}

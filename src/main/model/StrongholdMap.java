@@ -43,6 +43,7 @@ public class StrongholdMap implements Writable {
         this.width = width;
         this.strongholds = new Stronghold[this.height][this.width];
         this.players = new ArrayList<>();
+        this.roundInterval = FPS / 2;
     }
 
     public StrongholdMap(int height, int width, int currentTimeUnit, int roundInterval) {

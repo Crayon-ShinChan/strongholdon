@@ -35,7 +35,12 @@ public class JsonTest {
                 boolean checkPlayerId = info[0] == p.getPlayerId();
                 boolean checkPos = info[1] == p.getPosX() && info[2] == p.getPosY();
                 boolean checkScore = info[3] == p.getScore();
-                if (checkPlayerId && checkPos && checkScore) {
+                boolean checkResourceId = info[4] == p.getResourceId();
+                boolean checkLastMoveUnit = true;
+                if (info[4] != -1) {
+                    checkLastMoveUnit = info[4] == p.getResourceId();
+                }
+                if (checkPlayerId && checkPos && checkScore && checkResourceId) {
                     count++;
                 }
             }

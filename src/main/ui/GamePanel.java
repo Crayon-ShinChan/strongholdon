@@ -166,7 +166,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void resumeMusic() {
-        int clipTime = (strongholdMap.getCurrentTimeUnit() % FPS) * 10 * 1000 / FPS;
+        long clipTime = (long) (strongholdMap.getCurrentTimeUnit() % (FPS * 10))  * 10 * 1000000 / (FPS * 10);
         stopMusic();
         sound.setClipTime(clipTime);
         sound.setStatus(2);
