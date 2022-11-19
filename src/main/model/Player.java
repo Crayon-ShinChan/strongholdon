@@ -146,10 +146,6 @@ public class Player implements Writable {
         this.strongholdMap = strongholdMap;
     }
 
-    public void setLastMoveTimeUnit(int lastMoveTimeUnit) {
-        this.lastMoveTimeUnit = lastMoveTimeUnit;
-    }
-
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
