@@ -33,7 +33,8 @@ This will promote friendship, unless they are overly concerned about winning or 
   * after starting game, hit "A" and "D" to choose player and hit "Enter" when selecting "ADD PLAYER" to add player
   * after starting game, use "A" and "D" to choose player and hit "Enter" when selecting "REMOVE PLAYER" to remove player
 * You can generate the events related to adding strongholds to the map by
-  * after starting game, hit "WSAD" to occupy strongholds and add it to the map
+  * after starting a match, hit "WSAD" to occupy strongholds and add it to the map
+  * after starting a match, make a circle to gain bonus strongholds
 * Player images are the visual components, you can find them in "./data/players"
 * You can save the match by hitting "ESC" and select "SAVE AND QUIT MATCH" when playing in a match
 * You can load the match by selecting "RESUME GAME" on title screen, i.e. the opening page of the game
