@@ -187,7 +187,6 @@ public class Drawer {
 
     // EFFECTS: gets passedWidth
     private int getPassedWidth(int width) {
-        System.out.println((gp.getStrongholdMap().getCurrentTimeUnit() % (FPS / 2)) * width / (FPS / 2));
         return (gp.getStrongholdMap().getCurrentTimeUnit() % (FPS / 2)) * width / (FPS / 2);
     }
 
