@@ -1,9 +1,10 @@
 package model;
 
+import exception.model.Player;
+import exception.model.Stronghold;
+import exception.model.StrongholdMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

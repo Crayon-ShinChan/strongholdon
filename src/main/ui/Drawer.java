@@ -1,8 +1,8 @@
 package ui;
 
-import model.Player;
-import model.Stronghold;
-import model.StrongholdMap;
+import exception.model.Player;
+import exception.model.Stronghold;
+import exception.model.StrongholdMap;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import static java.lang.Math.*;
-import static model.StrongholdMap.*;
+import static exception.model.StrongholdMap.*;
 import static ui.GamePanel.*;
 
 public class Drawer {
@@ -147,9 +147,9 @@ public class Drawer {
     }
 
     private void drawHeart() {
-        int leftBound = TILE_SIZE * 3;
-        int rightBound = SCREEN_HEIGHT;
-        int center = leftBound + (SCREEN_WIDTH - leftBound) / 2 - (gp.getStrongholdMap().getCurrentTimeUnit() % FPS) * 2;
+        int leftBd = TILE_SIZE * 3;
+        int rightBd = SCREEN_HEIGHT;
+        int center = leftBd + (SCREEN_WIDTH - leftBd) / 2 - (gp.getStrongholdMap().getCurrentTimeUnit() % FPS) * 2;
         int y = SCREEN_HEIGHT - TILE_SIZE * 3 + TILE_SIZE / 2;
         int x = center;
         int imageWidth = 60 * SCALE;
@@ -159,17 +159,17 @@ public class Drawer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        while (x + imageWidth <= rightBound) {
+        while (x + imageWidth <= rightBd) {
             g2.drawImage(image, x, y, imageWidth, TILE_SIZE * 2, null);
             x += imageWidth;
         }
-        drawPartialImage(x, rightBound, y, image, imageWidth, TILE_SIZE * 2, false);
+        drawPartialImage(x, rightBd, y, image, imageWidth, TILE_SIZE * 2, false);
         x = center - imageWidth;
-        while (x >= leftBound) {
+        while (x >= leftBd) {
             g2.drawImage(image, x, y, imageWidth, TILE_SIZE * 2, null);
             x -= imageWidth;
         }
-        drawPartialImage(leftBound, x + imageWidth, y, image, imageWidth, TILE_SIZE * 2, true);
+        drawPartialImage(leftBd, x + imageWidth, y, image, imageWidth, TILE_SIZE * 2, true);
     }
 
     private void drawPartialImage(

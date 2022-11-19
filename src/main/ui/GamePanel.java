@@ -1,8 +1,8 @@
 package ui;
 
 import exception.PlayerDoesNotExist;
-import model.Player;
-import model.StrongholdMap;
+import exception.model.Player;
+import exception.model.StrongholdMap;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {

@@ -1,5 +1,8 @@
 package model;
 
+import exception.model.Player;
+import exception.model.Stronghold;
+import exception.model.StrongholdMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,6 +54,29 @@ public class PlayerTest {
         assertEquals(3, playerList.get(0).getPosY());
         assertEquals(0, playerList.get(1).getPosY());
         assertEquals(SMALL_WIDTH - 1, playerList.get(2).getPosY());
+    }
+
+    @Test
+    public void testConstructorOnlyWithId() {
+        Player player = new Player(0, 1);
+        assertEquals(0, player.getPlayerId());
+        assertEquals(1, player.getResourceId());
+        assertEquals(0, player.getScore());
+        assertNull(player.getPosX());
+        assertNull(player.getPosY());
+        assertNull(player.getStrongholdMap());
+    }
+
+    @Test
+    public void testConstructorWithFullInfo() {
+        Player player = new Player(0, 1, 0, 1, strongholdMap1, 0);
+        assertEquals(0, player.getPlayerId());
+        assertEquals(1, player.getResourceId());
+        assertEquals(0, player.getScore());
+        assertEquals(0, player.getPosX());
+        assertEquals(1, player.getPosY());
+        assertEquals(strongholdMap1, player.getStrongholdMap());
+        assertEquals(0, player.getLastMoveTimeUnit());
     }
 
     // TODO: ask if we should test calScore, which is tested in StrongholdMap test class

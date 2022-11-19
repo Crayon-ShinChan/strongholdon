@@ -1,6 +1,6 @@
 package persistence;
 
-import model.StrongholdMap;
+import exception.model.StrongholdMap;
 import org.json.JSONObject;
 
 import java.io.File;

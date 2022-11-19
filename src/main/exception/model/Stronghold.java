@@ -1,4 +1,4 @@
-package model;
+package exception.model;
 
 import org.json.JSONObject;
 import persistence.Writable;

@@ -1,4 +1,4 @@
-package model;
+package exception.model;
 
 import org.json.JSONObject;
 import persistence.Writable;
@@ -27,10 +27,7 @@ public class Player implements Writable {
     public Player(int playerId, int resourceId) {
         this.playerId = playerId;
         this.resourceId = resourceId;
-        this.posX = null;
-        this.posY = null;
         this.score = 0;
-        this.strongholdMap = null;
     }
 
     // REQUIRES: playerId > 0 AND posX >= 0 AND posX < StrongholdMap.width
@@ -115,6 +112,10 @@ public class Player implements Writable {
 
     public int getResourceId() {
         return resourceId;
+    }
+
+    public Integer getLastMoveTimeUnit() {
+        return lastMoveTimeUnit;
     }
 
     // EFFECTS: get strongholdMap of the player

@@ -1,9 +1,9 @@
 package ui;
 
 import exception.PlayerDoesNotExist;
-import model.Player;
-import model.Stronghold;
-import model.StrongholdMap;
+import exception.model.Player;
+import exception.model.Stronghold;
+import exception.model.StrongholdMap;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 

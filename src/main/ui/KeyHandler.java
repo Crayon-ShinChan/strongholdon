@@ -1,6 +1,6 @@
 package ui;
 
-import model.Player;
+import exception.model.Player;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

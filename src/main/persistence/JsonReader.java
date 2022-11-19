@@ -1,9 +1,9 @@
 package persistence;
 
 import exception.PlayerDoesNotExist;
-import model.Player;
-import model.Stronghold;
-import model.StrongholdMap;
+import exception.model.Player;
+import exception.model.Stronghold;
+import exception.model.StrongholdMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
