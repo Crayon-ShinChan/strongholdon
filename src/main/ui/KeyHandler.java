@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+// KeyHandler for our game
 public class KeyHandler implements KeyListener {
     public static final int[][] KEY_MAP = {
             {KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D},
@@ -15,6 +16,7 @@ public class KeyHandler implements KeyListener {
     private GamePanel gp;
     private Drawer drawer;
 
+    // EFFECTS: construct KeyHandler
     public KeyHandler(GamePanel gp, Drawer drawer) {
         this.gp = gp;
         this.drawer = drawer;
@@ -24,6 +26,7 @@ public class KeyHandler implements KeyListener {
     public void keyTyped(KeyEvent e) {
     }
 
+    // EFFECTS: handles keys in different game states
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
@@ -41,6 +44,8 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: handles keys when game state is MATCH_END
     private void keyPressedHandlerMatchEnd(int code) {
         if (code == KeyEvent.VK_W) {
             drawer.decreaseMenuCursorNum();
@@ -60,6 +65,8 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: handles keys when game state is PAUSE
     private void keyPressedHandlerPause(int code) {
         if (code == KeyEvent.VK_W) {
             drawer.decreaseMenuCursorNum();
@@ -78,6 +85,8 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: handles keys when game state is MATCH
     private void keyPressedHandlerMatch(int code) {
         if (code == KeyEvent.VK_ESCAPE) {
             gp.changeGameState(GameState.PAUSE);
@@ -88,6 +97,8 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: handles keys when game state is MATCH
     private void keyPressedHandlerMatchMovePlayer(int code, Player player, int[] keyMap) {
         if (code == keyMap[0]) {
             player.move("w");
@@ -103,6 +114,8 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: handles keys when game state is CHOOSING_PLAYER
     private void keyPressedHandlerChoosingPlayer(int code) {
         if (code == KeyEvent.VK_W) {
             drawer.decreaseMenuCursorNum();
@@ -121,6 +134,8 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: handles keys when game state is CHOOSING_PLAYER
     private void keyPressedHandlerChoosingPlayerEnterHandler() {
         int cursorNum = drawer.getMenuCursorNum();
         if (cursorNum == 0) {
@@ -136,6 +151,8 @@ public class KeyHandler implements KeyListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: handles keys when game state is TITLE_SCREEN
     private void keyPressedHandlerTitleScreen(int code) {
         if (code == KeyEvent.VK_W) {
             drawer.decreaseMenuCursorNum();

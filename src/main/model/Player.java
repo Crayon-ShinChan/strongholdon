@@ -110,10 +110,12 @@ public class Player implements Writable {
         return score;
     }
 
+    // EFFECTS: gets resourceId
     public int getResourceId() {
         return resourceId;
     }
 
+    // EFFECTS: gets lastMoveTimeUnit
     public Integer getLastMoveTimeUnit() {
         return lastMoveTimeUnit;
     }

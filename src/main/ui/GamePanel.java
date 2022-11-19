@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+// GamePanel to control time, data and drawing
 public class GamePanel extends JPanel implements Runnable {
     public static final int ORIGINAL_TILE_SIZE = 24;
     public static final int SCALE = 2;
@@ -32,6 +33,7 @@ public class GamePanel extends JPanel implements Runnable {
     private JsonReader jsonReader;
     private Sound sound;
 
+    // EFFECTS: construct GamePanel
     public GamePanel() {
         // sets the size of JPanel
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -49,6 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.sound = new Sound();
     }
 
+    // EFFECTS: runs the game in FPS, controls time
     @Override
     public void run() {
         double drawInterval = 1e9 / FPS;
@@ -82,12 +85,15 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: start game thread
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
         playMusic(0);
     }
 
+    // EFFECTS: paint components
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -95,19 +101,24 @@ public class GamePanel extends JPanel implements Runnable {
         g2.dispose();
     }
 
+    // EFFECTS: return game state
     public GameState getGameState() {
         return gameState;
     }
 
     // TODO: make it not changeable (collection), like lab 8
+    // EFFECTS: return map
     public StrongholdMap getStrongholdMap() {
         return strongholdMap;
     }
 
+    // EFFECTS: initial map
     public void initialStrongholdMap() {
         strongholdMap = new StrongholdMap();
     }
 
+    // MODIFIES: this
+    // EFFECTS: change game states and control music
     public void changeGameState(GameState newGameState) {
         if (newGameState != gameState) {
             if (newGameState == GameState.TITLE_SCREEN) {
@@ -126,6 +137,8 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: update data and music
     private void update(long currentTime) {
         if (gameState == GameState.MATCH) {
             int currentTimeUnit = strongholdMap.getCurrentTimeUnit();
@@ -167,6 +180,8 @@ public class GamePanel extends JPanel implements Runnable {
         resumeMusic();
     }
 
+    // MODIFIES: this
+    // EFFECTS: resumes music
     private void resumeMusic() {
         long clipTime = (long) (strongholdMap.getCurrentTimeUnit() % (FPS * 10))  * 10 * 1000000 / (FPS * 10);
         stopMusic();
@@ -175,6 +190,8 @@ public class GamePanel extends JPanel implements Runnable {
         playMusicWithoutLoop(1);
     }
 
+    // MODIFIES: this
+    // EFFECTS: restarts match
     public void restartMatch() {
         ArrayList<Player> playerList = getStrongholdMap().getPlayers();
         strongholdMap = new StrongholdMap();
@@ -185,21 +202,29 @@ public class GamePanel extends JPanel implements Runnable {
         strongholdMap.startMatch();
     }
 
+    // MODIFIES: this
+    // EFFECTS: play music with loop
     private void playMusic(int i) {
         sound.setFile(i);
         sound.play();
         sound.loop();
     }
 
+    // MODIFIES: this
+    // EFFECTS: play music without loop
     private void playMusicWithoutLoop(int i) {
         sound.setFile(i);
         sound.play();
     }
 
+    // MODIFIES: this
+    // EFFECTS: stop music
     private void stopMusic() {
         sound.stop();
     }
 
+    // MODIFIES: this
+    // EFFECTS: pause music
     private void pauseMusic() {
         sound.pause();
     }

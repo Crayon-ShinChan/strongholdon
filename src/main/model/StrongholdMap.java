@@ -249,18 +249,23 @@ public class StrongholdMap implements Writable {
         }
     }
 
+    // EFFECTS: returns roundStartTimeUnit
     public int getRoundStartTimeUnit() {
         return currentTimeUnit / roundInterval * roundInterval;
     }
 
+    // MODIFIES: this
+    // EFFECTS: increase currentTimeUnit
     public void increaseCurrentTimeUnit() {
         this.currentTimeUnit++;
     }
 
+    // EFFECTS: returns currentTimeUnit
     public int getCurrentTimeUnit() {
         return this.currentTimeUnit;
     }
 
+    // EFFECTS: returns if time is up
     public boolean getIsTimeUp() {
         return GAME_SECOND * FPS <= currentTimeUnit;
     }

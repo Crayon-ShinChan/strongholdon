@@ -15,6 +15,7 @@ import static java.lang.Math.*;
 import static model.StrongholdMap.*;
 import static ui.GamePanel.*;
 
+// Draws everything needed on the screen
 public class Drawer {
     public static final int[] playerColor = {0x40577e, 0xa04946, 0x768c3d};
 
@@ -25,6 +26,7 @@ public class Drawer {
     private ArrayList<Integer> playerStack;
     private int cursorPlayerNum;
 
+    // EFFECTS: construct drawer
     public Drawer(GamePanel gp) {
         this.gp = gp;
 
@@ -40,6 +42,8 @@ public class Drawer {
         menu = new Menu(menuList);
     }
 
+    // MODIFIES: this
+    // EFFECTS: draws things based on game state
     public void draw(Graphics2D g2) {
         this.g2 = g2;
         g2.setFont(maruMonicaFont);
@@ -60,6 +64,7 @@ public class Drawer {
         }
     }
 
+    // EFFECTS: draws components when game state is MATCH_END
     private void drawMatchEnd() {
         g2.setColor(new Color(0xEABC52));
         g2.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -68,6 +73,7 @@ public class Drawer {
         drawResults();
     }
 
+    // EFFECTS: draws components when game state is MATCH_END
     private void drawResults() {
         int imageSize = TILE_SIZE * 3;
         int space = TILE_SIZE * 2;
@@ -76,6 +82,7 @@ public class Drawer {
         drawResultsScore(imageSize, space, playersList);
     }
 
+    // EFFECTS: draws components when game state is MATCH_END
     private void drawResultsScore(int imageSize, int space, ArrayList<Player> playersList) {
         int x = getStartXForPlayerList(imageSize, space, playersList);
         int y = TILE_SIZE * 8;
@@ -91,6 +98,7 @@ public class Drawer {
         }
     }
 
+    // EFFECTS: draws components when game state is MATCH_END
     private void drawResultsPlayer(int imageSize, int space, ArrayList<Player> playersList) {
         int x = getStartXForPlayerList(imageSize, space, playersList);;
         int y = TILE_SIZE * 2;
@@ -108,6 +116,7 @@ public class Drawer {
         }
     }
 
+    // EFFECTS: returns proper x location for drawing players
     private int getStartXForPlayerList(int imageSize, int space, ArrayList<Player> playerList) {
         if (playerList.size() == 2) {
             return SCREEN_WIDTH / 2 - imageSize / 2 - (space + imageSize) / 2;
@@ -117,6 +126,7 @@ public class Drawer {
         return 0;
     }
 
+    // EFFECTS: draws components when game state is PAUSE
     private void drawPause() {
         g2.setColor(new Color(0xEABC52));
         g2.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -124,6 +134,7 @@ public class Drawer {
         menu.draw(g2, TILE_SIZE * 7);
     }
 
+    // EFFECTS: draws components when game state is MATCH
     private void drawMatch() {
         g2.setColor(new Color(0xEABC52));
         g2.fillRect(0, 0, SCREEN_WIDTH, DEFAULT_HEIGHT * TILE_SIZE);
@@ -138,6 +149,7 @@ public class Drawer {
         drawMiddleLine();
     }
 
+    // EFFECTS: draws components when game state is MATCH
     private void drawMiddleLine() {
         int leftBound = TILE_SIZE * 3;
         int center = leftBound + (SCREEN_WIDTH - leftBound) / 2;
@@ -146,6 +158,7 @@ public class Drawer {
         g2.drawRect(center, y, 1, TILE_SIZE * 2);
     }
 
+    // EFFECTS: draws components when game state is MATCH
     private void drawHeart() {
         int leftBd = TILE_SIZE * 3;
         int rightBd = SCREEN_HEIGHT;
@@ -172,6 +185,7 @@ public class Drawer {
         drawPartialImage(leftBd, x + imageWidth, y, image, imageWidth, TILE_SIZE * 2, true);
     }
 
+    // EFFECTS: draws components when game state is MATCH
     private void drawPartialImage(
             int leftX,
             int rightX,
@@ -196,6 +210,7 @@ public class Drawer {
         }
     }
 
+    // EFFECTS: draws components when game state is MATCH
     private void drawTimer() {
         int timer = GAME_SECOND - gp.getStrongholdMap().getCurrentTimeUnit() / FPS;
         g2.setColor(Color.black);
@@ -203,6 +218,7 @@ public class Drawer {
         g2.drawString(String.valueOf(timer), TILE_SIZE * 6 / 10, SCREEN_WIDTH - TILE_SIZE * 8 / 10);
     }
 
+    // EFFECTS: draws components when game state is MATCH
     private void drawLandInMatch() {
         BufferedImage landImage;
         try {
@@ -218,6 +234,7 @@ public class Drawer {
     }
 
     // TODO: return unchangeable array
+    // EFFECTS: draws components when game state is MATCH
     private void drawStrongholdInMatch() {
         Stronghold[][] strongholds = gp.getStrongholdMap().getStrongholds();
         for (int i = 0; i < DEFAULT_HEIGHT; i++) {
@@ -231,6 +248,7 @@ public class Drawer {
         }
     }
 
+    // EFFECTS: returns right stronghold image for the player
     private BufferedImage getStrongholdImage(Stronghold stronghold) {
         int resourceId = stronghold.getOwner().getResourceId();
         String imagePath = "players/hold" + resourceId + ".png";
@@ -243,6 +261,7 @@ public class Drawer {
         return image;
     }
 
+    // EFFECTS: draws components when game state is MATCH
     private void drawPlayerInMatch() {
         ArrayList<Player> playerList = gp.getStrongholdMap().getPlayers();
         for (Player p : playerList) {
@@ -259,7 +278,7 @@ public class Drawer {
         }
     }
 
-
+    // EFFECTS: draws components when game state is CHOOSING_PLAYER
     private void drawChoosingPlayer() {
         g2.setColor(new Color(0xEABC52));
         g2.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -269,6 +288,7 @@ public class Drawer {
         drawPlayerList();
     }
 
+    // EFFECTS: draws components when game state is CHOOSING_PLAYER
     private void drawPlayerList() {
         int imageSize = TILE_SIZE * 3;
         int space = TILE_SIZE * 2;
@@ -294,6 +314,7 @@ public class Drawer {
         }
     }
 
+    // EFFECTS: draws components when game state is CHOOSING_PLAYER
     private void paintPlayerAndHold(BufferedImage holdImage, BufferedImage playerImage, int x, int y, int imageSize) {
         if (holdImage != null) {
             g2.drawImage(holdImage, x, y, imageSize, imageSize, null);
@@ -301,18 +322,25 @@ public class Drawer {
         g2.drawImage(playerImage, x, y, imageSize, imageSize, null);
     }
 
+    // MODIFIES: this
+    // EFFECTS: increases cursorNum
     public void increaseMenuCursorNum() {
         menu.increaseCursorNum();
     }
 
+    // MODIFIES: this
+    // EFFECTS: decrease cursorNum
     public void decreaseMenuCursorNum() {
         menu.decreaseCursorNum();
     }
 
+    // EFFECTS: returns cursorNum
     public int getMenuCursorNum() {
         return menu.getCursorNum();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initial menu when game state changes
     public void initialMenu() {
         GameState gs = gp.getGameState();
         String[] menuList;
@@ -331,6 +359,7 @@ public class Drawer {
         }
     }
 
+    // EFFECTS: draws components when game state is TITLE_SCREEN
     private void drawTitleScreen() {
         g2.setColor(new Color(0xEABC52));
         g2.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -342,6 +371,7 @@ public class Drawer {
         menu.draw(g2, TILE_SIZE * 9);
     }
 
+    // EFFECTS: draws components when game state is TITLE_SCREEN
     private void drawTitle() {
         String title = "STRONGHOLDON";
         // set the font first to allow getXForCenteredText to get the correct width
@@ -354,11 +384,14 @@ public class Drawer {
         g2.drawString(title, width, height);
     }
 
+    // EFFECTS: returns proper x for centered text
     private int getXForCenteredText(String text) {
         int width = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return SCREEN_WIDTH / 2 - width / 2;
     }
 
+    // MODIFIES: this
+    // EFFECTS: decreases cursorPlayerNum
     public void decreaseCursorPlayerNum() {
         for (int i = cursorPlayerNum - 1; i >= 0; i--) {
             if (!playerStack.contains(i)) {
@@ -369,6 +402,8 @@ public class Drawer {
         cursorPlayerNum = max(0, cursorPlayerNum);
     }
 
+    // MODIFIES: this
+    // EFFECTS: increase cursorPlayerNum
     public void increaseCursorPlayerNum() {
         for (int i = cursorPlayerNum + 1; i < MAX_PLAYER_NUM; i++) {
             if (!playerStack.contains(i)) {
@@ -379,10 +414,13 @@ public class Drawer {
         cursorPlayerNum = min(MAX_PLAYER_NUM, cursorPlayerNum);
     }
 
+    // EFFECTS: returns cursorPlayerNum
     public int getCursorPlayerNum() {
         return cursorPlayerNum;
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds players to play
     public void addPlayer() {
         if (playerStack.contains(cursorPlayerNum)) {
             return;
@@ -398,6 +436,8 @@ public class Drawer {
         cursorPlayerNum = nextCursorPlayerNum;
     }
 
+    // MODIFIES: this
+    // EFFECTS: remove players to play
     public void removePlayer() {
         if (playerStack.size() == 0) {
             return;
@@ -413,6 +453,8 @@ public class Drawer {
         cursorPlayerNum = nextCursorPlayerNum;
     }
 
+    // MODIFIES: this
+    // EFFECTS: start match
     public boolean startMatch() {
         if (playerStack.size() < 2) {
             return false;

@@ -13,11 +13,13 @@ public class Menu {
     private Graphics2D g2;
 
     // REQUIRES: length of menuList > 0
+    // EFFECTS: construct a menu
     public Menu(String[] menuList) {
         this.menuList = menuList;
         this.cursorNum = 0;
     }
 
+    // EFFECTS: draws menu
     public void draw(Graphics2D g2, int topY) {
         this.g2 = g2;
         int fontSize = TILE_SIZE;
@@ -41,18 +43,24 @@ public class Menu {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: increases cursorNum
     public void increaseCursorNum() {
         cursorNum = min(cursorNum + 1, menuList.length - 1);
     }
 
+    // MODIFIES: this
+    // EFFECTS: decreases cursorNum
     public void decreaseCursorNum() {
         cursorNum = max(cursorNum - 1, 0);
     }
 
+    // EFFECTS: returns cursorNum
     public int getCursorNum() {
         return cursorNum;
     }
 
+    // EFFECTS: gets proper x pos for centered text
     private int getXForCenteredText(String text) {
         int width = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         return SCREEN_WIDTH / 2 - width / 2;
