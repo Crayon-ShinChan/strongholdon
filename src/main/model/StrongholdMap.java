@@ -1,4 +1,4 @@
-package exception.model;
+package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,7 +15,7 @@ public class StrongholdMap implements Writable {
     public static final int DEFAULT_WIDTH = MAX_SCREEN_WIDTH; // should be larger than 4
     public static final int MAX_PLAYER_NUM = 3;
     public static final int MIN_PLAYER_NUM = 2;
-    public static final int GAME_SECOND = 25;
+    public static final int GAME_SECOND = 60;
 
     private final int height;
     private final int width;

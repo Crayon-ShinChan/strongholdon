@@ -1,8 +1,8 @@
 package ui;
 
 import exception.PlayerDoesNotExist;
-import exception.model.Player;
-import exception.model.StrongholdMap;
+import model.Player;
+import model.StrongholdMap;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -117,6 +117,9 @@ public class GamePanel extends JPanel implements Runnable {
                 pauseMusic();
             } else if (newGameState == GameState.MATCH && gameState == GameState.PAUSE) {
                 playMusic(1);
+            } else if (newGameState == GameState.MATCH_END) {
+                stopMusic();
+                playMusic(0);
             }
             gameState = newGameState;
             drawer.initialMenu();

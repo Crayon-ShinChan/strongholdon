@@ -1,8 +1,8 @@
 package ui;
 
-import exception.model.Player;
-import exception.model.Stronghold;
-import exception.model.StrongholdMap;
+import model.Player;
+import model.Stronghold;
+import model.StrongholdMap;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import static java.lang.Math.*;
-import static exception.model.StrongholdMap.*;
+import static model.StrongholdMap.*;
 import static ui.GamePanel.*;
 
 public class Drawer {
