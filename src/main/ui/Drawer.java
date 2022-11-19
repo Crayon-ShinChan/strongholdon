@@ -162,10 +162,10 @@ public class Drawer {
     private void drawHeart() {
         int leftBd = TILE_SIZE * 3;
         int rightBd = SCREEN_HEIGHT;
-        int center = leftBd + (SCREEN_WIDTH - leftBd) / 2 - (gp.getStrongholdMap().getCurrentTimeUnit() % FPS) * 2;
+        int imageWidth = 60 * SCALE;
+        int center = (SCREEN_WIDTH + leftBd) / 2 - getPassedWidth(imageWidth);
         int y = SCREEN_HEIGHT - TILE_SIZE * 3 + TILE_SIZE / 2;
         int x = center;
-        int imageWidth = 60 * SCALE;
         BufferedImage image = null;
         try {
             image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("time/heart.png"));
@@ -183,6 +183,12 @@ public class Drawer {
             x -= imageWidth;
         }
         drawPartialImage(leftBd, x + imageWidth, y, image, imageWidth, TILE_SIZE * 2, true);
+    }
+
+    // EFFECTS: gets passedWidth
+    private int getPassedWidth(int width) {
+        System.out.println((gp.getStrongholdMap().getCurrentTimeUnit() % (FPS / 2)) * width / (FPS / 2));
+        return (gp.getStrongholdMap().getCurrentTimeUnit() % (FPS / 2)) * width / (FPS / 2);
     }
 
     // EFFECTS: draws components when game state is MATCH
