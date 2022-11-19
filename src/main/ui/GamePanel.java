@@ -129,7 +129,7 @@ public class GamePanel extends JPanel implements Runnable {
             int currentTimeUnit = strongholdMap.getCurrentTimeUnit();
             if (currentTimeUnit % (FPS * 10) == 0) {
                 stopMusic();
-                playMusic(1);
+                playMusicWithoutLoop(1);
             }
             if (strongholdMap.getIsTimeUp()) {
                 changeGameState(GameState.MATCH_END);
@@ -162,6 +162,15 @@ public class GamePanel extends JPanel implements Runnable {
         } catch (PlayerDoesNotExist e) {
             System.out.println("A stronghold has a player does not exist");
         }
+        resumeMusic();
+    }
+
+    private void resumeMusic() {
+        int clipTime = (strongholdMap.getCurrentTimeUnit() % FPS) * 10 * 1000 / FPS;
+        stopMusic();
+        sound.setClipTime(clipTime);
+        sound.setStatus(2);
+        playMusicWithoutLoop(1);
     }
 
     public void restartMatch() {
@@ -178,6 +187,11 @@ public class GamePanel extends JPanel implements Runnable {
         sound.setFile(i);
         sound.play();
         sound.loop();
+    }
+
+    private void playMusicWithoutLoop(int i) {
+        sound.setFile(i);
+        sound.play();
     }
 
     private void stopMusic() {
