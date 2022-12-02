@@ -18,7 +18,6 @@ public class Player implements Writable {
     private int score;
     private StrongholdMap strongholdMap;
     private Integer lastMoveTimeUnit;
-    // private ArrayList<Stronghold> newStronghold;
     // private String color;
 
     // REQUIRES: playerId > 0 AND posX >= 0 AND posX < StrongholdMap.width
