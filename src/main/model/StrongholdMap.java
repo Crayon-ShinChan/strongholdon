@@ -60,13 +60,16 @@ public class StrongholdMap implements Writable {
     //          all players have different initial positions
     //          refresh scores
     public void startMatch() {
+        EventLog.getInstance().logEvent(
+                new Event("Match Start!")
+        );
         int[][] positionList = calPositionList(players.size());
         shufflePositionList(positionList);
         for (int i = 0; i < players.size(); i++) {
             int posX = positionList[i][0];
             int posY = positionList[i][1];
             if (strongholds[posX][posY] == null) {
-                strongholds[posX][posY] = new Stronghold(players.get(i), posX, posY);
+                addStronghold(new Stronghold(players.get(i), posX, posY));
             } else {
                 strongholds[posX][posY].setOwner(players.get(i));
             }
@@ -110,12 +113,27 @@ public class StrongholdMap implements Writable {
     public void addPlayerWithData(Player p) {
         p.setStrongholdMap(this);
         players.add(p);
+        EventLog.getInstance().logEvent(
+                new Event(
+                        String.format("A player is added to the map: playerId: %d, resourceId: %d",
+                                p.getPlayerId(),
+                                p.getResourceId())
+                )
+        );
     }
 
     // MODIFIES: this
     // EFFECTS: add a stronghold to map
     public void addStronghold(Stronghold s) {
         strongholds[s.getPosX()][s.getPosY()] = s;
+        EventLog.getInstance().logEvent(
+                new Event(
+                        String.format("A new stronghold is added to the map: ownerId: %d, posX: %d, posY: %d",
+                                s.getOwner().getPlayerId(),
+                                s.getPosX(),
+                                s.getPosY())
+                )
+        );
     }
 
     // MODIFIES: this

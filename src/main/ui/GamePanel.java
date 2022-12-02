@@ -1,6 +1,8 @@
 package ui;
 
 import exception.PlayerDoesNotExist;
+import model.Event;
+import model.EventLog;
 import model.Player;
 import model.StrongholdMap;
 import persistence.JsonReader;
@@ -78,7 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
                 drawCount++;
             }
             if (timer >= 1e9) {
-                System.out.println("FPS:" + drawCount);
+//                System.out.println("FPS:" + drawCount);
                 drawCount = 0;
                 timer = 0;
             }
@@ -227,5 +229,12 @@ public class GamePanel extends JPanel implements Runnable {
     // EFFECTS: pause music
     private void pauseMusic() {
         sound.pause();
+    }
+
+    // EFFECTS: prints log
+    public void printLog() {
+        for (Event next : EventLog.getInstance()) {
+            System.out.println(next.toString() + "\n");
+        }
     }
 }

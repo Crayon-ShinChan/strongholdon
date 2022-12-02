@@ -168,6 +168,7 @@ public class KeyHandler implements KeyListener {
                 gp.loadStrongholdMap();
                 gp.changeGameState(GameState.MATCH);
             } else if (cursorNum == 2) {
+                gp.printLog();
                 System.exit(0);
             }
         }

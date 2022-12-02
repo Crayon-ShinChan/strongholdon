@@ -23,6 +23,14 @@ public class Stronghold implements Writable {
     // EFFECTS: set the owner of a stronghold
     public void setOwner(Player p) {
         this.owner = p;
+        EventLog.getInstance().logEvent(
+                new Event(
+                        String.format("A stronghold is occupied by a player: playerId: %d, posX: %d, posY: %d",
+                                owner.getPlayerId(),
+                                posX,
+                                posY)
+                )
+        );
     }
 
     @Override

@@ -91,6 +91,14 @@ public class Player implements Writable {
         if (lastMoveTimeUnit - roundStartTimeUnit < FPS / 2 / 6) {
             return moveAndOccupy(direction);
         }
+        EventLog.getInstance().logEvent(
+                new Event(
+                        String.format("A player changed its position on the map: playerId: %d, posX: %d, posY: %d",
+                                playerId,
+                                posX,
+                                posY)
+                )
+        );
         return true;
     }
 
