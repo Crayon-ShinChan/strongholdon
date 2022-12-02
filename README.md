@@ -107,7 +107,7 @@ A player changed its position on the map: playerId: 0, posX: 6, posY: 4
 3. add players to the map
 4. change the position of players on the map
 
-### What event are not covered in  log?
+### What event is not covered in log?
 
 remove a player On "CHOOSING PLAYER" page before starting a match
 
