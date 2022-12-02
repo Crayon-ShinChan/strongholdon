@@ -141,7 +141,7 @@ We do not create Event in ui package so removing a player is not covered in log.
 4. Create a new class called Time to control the game time
    1. Reason: Now time control is integrated in StrongholdMap.
    But time control is not a simple module in this game. For example, a player is only allow to move once in every half a second.
-   2. Benefits: Separating functionalities into different class is beneficial for debugging.
+   2. Benefits: Separating functionalities into different classes is beneficial for debugging.
 5. Move more sound control functionalities from GamePanel to Sound class, GamePanel just send GameState to Sound
    1. Reason: Now GamePanel implements too many sound control functionalities, 
    like choosing which song for different GameState
