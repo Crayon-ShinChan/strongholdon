@@ -136,15 +136,17 @@ We do not create Event in ui package so removing a player is not covered in log.
    1. Reason: There are only one StrongholdMap all the time.
    2. Benefits: Make sure there is only one map.
    and do not need to create fields for Stronghold in Player, GamePanel classes.
-3. Create a new class called Time to control the game time
+3. Apply Singleton Pattern for Drawer class
+   1. Reason and Befits are similar as StrongholdMap
+4. Create a new class called Time to control the game time
    1. Reason: Now time control is integrated in StrongholdMap.
    But time control is not a simple module in this game. For example, a player is only allow to move once in a second.
    2. Benefits: Separating functionalities into different class is beneficial for debugging.
-4. Move more sound control functionalities from GamePanel to Sound class, GamePanel just send GameState to Sound
+5. Move more sound control functionalities from GamePanel to Sound class, GamePanel just send GameState to Sound
    1. Reason: Now GamePanel implements too many sound control functionalities, 
    like choosing which song for different GameState
    2. Benefits: Sound class has completed and separated functionalities to control songs to play, pause and resume, 
    which is beneficial for debugging
-5. Return immutable collections when we return data like playerList
+6. Return immutable collections when we return data like playerList
    1. Reason: Sometimes we want to just return the data but not modify it
    2. Benefits: Safer
