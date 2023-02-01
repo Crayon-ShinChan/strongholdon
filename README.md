@@ -1,4 +1,4 @@
-# My Personal Project
+# Strongholdon (Party Game)
 
 ## What will the application do
 
