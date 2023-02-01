@@ -1,5 +1,7 @@
 # Strongholdon (Party Game)
 
+![screenshot](Screenshot.png)
+
 ## What will the application do
 
 This program is a local multiplayer game, supporting two to four players to play.
